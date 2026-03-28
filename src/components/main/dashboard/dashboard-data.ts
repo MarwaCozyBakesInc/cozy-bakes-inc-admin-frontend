@@ -1,0 +1,178 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  ChartNoAxesColumn,
+  CircleAlert,
+  ClipboardList,
+  DollarSign,
+  PackageCheck,
+  PackageSearch,
+} from "lucide-react";
+
+export type DashboardStat = {
+  title: string;
+  value: string;
+  note: string;
+  trend: string;
+  icon: LucideIcon;
+  tone: "primary" | "secondary" | "light" | "gray";
+};
+
+export type SalesPoint = {
+  day: string;
+  value: number;
+};
+
+export type CategoryShare = {
+  name: string;
+  value: number;
+  tone: "primary" | "secondary" | "light" | "taupe";
+};
+
+export type StockProduct = {
+  name: string;
+  stock: number;
+  threshold: number;
+};
+
+export type RecentOrder = {
+  id: string;
+  customer: string;
+  items: number;
+  timeAgo: string;
+  amount: string;
+  status: "Delivered" | "Preparing" | "Ready" | "New Order";
+};
+
+export type TopProduct = {
+  rank: number;
+  name: string;
+  sold: number;
+  growth: string;
+  revenue: string;
+};
+
+export const dashboardStats: DashboardStat[] = [
+  {
+    title: "Revenue Today",
+    value: "$1,284",
+    note: "vs yesterday",
+    trend: "+12.5%",
+    icon: DollarSign,
+    tone: "primary",
+  },
+  {
+    title: "Total Orders",
+    value: "342",
+    note: "this month",
+    trend: "+8.2%",
+    icon: ClipboardList,
+    tone: "secondary",
+  },
+  {
+    title: "Pending Orders",
+    value: "18",
+    note: "need attention",
+    trend: "-3.1%",
+    icon: PackageSearch,
+    tone: "light",
+  },
+  {
+    title: "Delivered Today",
+    value: "24",
+    note: "completed",
+    trend: "+5.3%",
+    icon: PackageCheck,
+    tone: "gray",
+  },
+];
+
+export const stockAlert = {
+  title: "Low Stock Alert",
+  description: "4 products need restocking",
+  icon: CircleAlert,
+};
+
+export const lowStockProducts: StockProduct[] = [
+  { name: "Sourdough Bread", stock: 8, threshold: 20 },
+  { name: "Whole Grain Bread", stock: 4, threshold: 10 },
+  { name: "Multigrain Bread", stock: 3, threshold: 10 },
+  { name: "Pain au Chocolat", stock: 0, threshold: 15 },
+];
+
+export const weeklySales: SalesPoint[] = [
+  { day: "Mon", value: 2400 },
+  { day: "Tue", value: 1400 },
+  { day: "Wed", value: 3248 },
+  { day: "Thu", value: 2800 },
+  { day: "Fri", value: 4900 },
+  { day: "Sat", value: 5400 },
+  { day: "Sun", value: 4500 },
+];
+
+export const salesByCategory: CategoryShare[] = [
+  { name: "Breads", value: 35, tone: "primary" },
+  { name: "Pastries", value: 28, tone: "secondary" },
+  { name: "Cakes", value: 22, tone: "light" },
+  { name: "Others", value: 15, tone: "taupe" },
+];
+
+export const recentOrders: RecentOrder[] = [
+  {
+    id: "ORD-1245",
+    customer: "Sarah Johnson",
+    items: 4,
+    timeAgo: "3 hours ago",
+    amount: "$42.50",
+    status: "Delivered",
+  },
+  {
+    id: "ORD-1244",
+    customer: "Michael Chen",
+    items: 3,
+    timeAgo: "3 hours ago",
+    amount: "$28.00",
+    status: "Preparing",
+  },
+  {
+    id: "ORD-1243",
+    customer: "Emma Wilson",
+    items: 4,
+    timeAgo: "3 hours ago",
+    amount: "$67.25",
+    status: "Ready",
+  },
+  {
+    id: "ORD-1242",
+    customer: "James Brown",
+    items: 4,
+    timeAgo: "3 hours ago",
+    amount: "$15.50",
+    status: "New Order",
+  },
+  {
+    id: "ORD-1241",
+    customer: "Lisa Anderson",
+    items: 3,
+    timeAgo: "3 hours ago",
+    amount: "$54.00",
+    status: "Preparing",
+  },
+];
+
+export const topProducts: TopProduct[] = [
+  { rank: 1, name: "Sourdough Bread", sold: 145, growth: "+12%", revenue: "$1232" },
+  { rank: 2, name: "Croissant", sold: 132, growth: "+8%", revenue: "$924" },
+  { rank: 3, name: "Baguette", sold: 98, growth: "+5%", revenue: "$735" },
+  { rank: 4, name: "Chocolate Cake", sold: 87, growth: "+15%", revenue: "$2784" },
+  { rank: 5, name: "Danish Pastry", sold: 76, growth: "+3%", revenue: "$608" },
+];
+
+export const dashboardActions = [
+  { label: "Add Product", icon: "plus" as const, filled: true },
+  { label: "View Orders", icon: "chart" as const, filled: false },
+];
+
+export const actionIcons = {
+  plus: CircleAlert,
+  chart: ChartNoAxesColumn,
+};
