@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { lowStockProducts, stockAlert } from "./dashboard-data";
+import { lowStockProducts, stockAlert } from "@/data/main/dashboard";
 import { DashboardProductThumb } from "./dashboard-shared";
 
 export function DashboardLowStockAlert() {

@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { topProducts } from "./dashboard-data";
+import { topProducts } from "@/data/main/dashboard";
 import { DashboardSectionCard } from "./dashboard-shared";
 
 export function DashboardTopProducts() {
@@ -23,7 +23,7 @@ export function DashboardTopProducts() {
               <p className="truncate text-xs font-bold text-dark md:text-sm">{product.name}</p>
               <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] font-medium text-gray md:text-xs">
                 <span>{product.sold} sold</span>
-                <span className="text-border">•</span>
+                <span className="text-border">&bull;</span>
                 <span className="inline-flex items-center gap-1 font-bold text-primary">
                   <ArrowUpRight className="size-3" />
                   {product.growth}

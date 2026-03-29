@@ -1,12 +1,13 @@
-import { recentOrders } from "./dashboard-data";
+import { recentOrders } from "@/data/main/dashboard";
+import type { DashboardOrderStatus } from "@/types/main/dashboard";
 import { DashboardSectionCard } from "./dashboard-shared";
 
-const statusClasses = {
+const statusClasses: Record<DashboardOrderStatus, string> = {
   Delivered: "bg-primary/10 text-primary",
   Preparing: "bg-bg-creamy text-heading-2",
   Ready: "bg-secondary/10 text-secondary",
   "New Order": "bg-gray/15 text-muted-text",
-} as const;
+};
 
 export function DashboardRecentOrders() {
   return (
@@ -28,7 +29,7 @@ export function DashboardRecentOrders() {
               </p>
               <p className="mt-1 text-[11px] font-medium text-gray md:text-xs">
                 {order.items} items
-                <span className="px-1.5 text-border">•</span>
+                <span className="px-1.5 text-border">&bull;</span>
                 {order.timeAgo}
               </p>
             </div>

@@ -44,7 +44,17 @@ export function SidebarShell({ children }: SidebarShellProps) {
   const [desktopExpanded, setDesktopExpanded] = useState(true);
 
   const activeItem =
-    sidebarItems.find((item) => item.href && item.href === pathname) ??
+    sidebarItems.find((item) => {
+      if (!item.href) {
+        return false;
+      }
+
+      if (item.href === "/") {
+        return pathname === "/";
+      }
+
+      return pathname === item.href || pathname.startsWith(`${item.href}/`);
+    }) ??
     sidebarItems.find((item) => item.id === "dashboard") ??
     sidebarItems[0];
 

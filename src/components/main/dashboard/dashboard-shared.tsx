@@ -1,14 +1,9 @@
-import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
+import type {
+  DashboardProductThumbProps,
+  DashboardSectionCardProps,
+} from "@/interfaces/main/dashboard";
 import { cn } from "@/lib/utils";
-
-type DashboardSectionCardProps = {
-  title: string;
-  description: string;
-  actionLabel?: string;
-  className?: string;
-  children: ReactNode;
-};
 
 export function DashboardSectionCard({
   title,
@@ -47,11 +42,6 @@ export function DashboardSectionCard({
     </section>
   );
 }
-
-type DashboardProductThumbProps = {
-  label: string;
-  className?: string;
-};
 
 export function DashboardProductThumb({
   label,

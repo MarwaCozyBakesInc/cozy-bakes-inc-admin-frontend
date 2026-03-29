@@ -1,4 +1,4 @@
-import { dashboardStats } from "./dashboard-data";
+import { dashboardStats } from "@/data/main/dashboard";
 import { DashboardStatCard } from "./dashboard-stat-card";
 
 export function DashboardStatsGrid() {

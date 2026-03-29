@@ -1,24 +1,45 @@
-import { salesByCategory } from "./dashboard-data";
+import { salesByCategory } from "@/data/main/dashboard";
+import type { DashboardCategoryTone } from "@/types/main/dashboard";
 import { DashboardSectionCard } from "./dashboard-shared";
 
-const toneClassMap = {
+const toneClassMap: Record<DashboardCategoryTone, string> = {
   primary: "text-primary",
   secondary: "text-secondary",
   light: "text-light-chocolate",
   taupe: "text-taupe-brown",
-} as const;
+};
 
-const segmentColors = {
+const segmentColors: Record<DashboardCategoryTone, string> = {
   primary: "var(--color-primary)",
   secondary: "var(--color-secondary)",
   light: "var(--color-light-chocolate)",
   taupe: "var(--color-taupe-brown)",
-} as const;
+};
 
 export function DashboardCategoryChart() {
   const radius = 56;
   const circumference = 2 * Math.PI * radius;
-  let cumulativeOffset = 0;
+  const chartSegments = salesByCategory.reduce<
+    Array<{
+      dash: number;
+      name: string;
+      strokeDashoffset: number;
+      tone: DashboardCategoryTone;
+    }>
+  >((segments, segment) => {
+    const dash = (segment.value / 100) * circumference;
+    const previousOffset = segments.at(-1)?.strokeDashoffset ?? 0;
+    const strokeDashoffset = previousOffset - dash;
+
+    segments.push({
+      dash,
+      name: segment.name,
+      strokeDashoffset,
+      tone: segment.tone,
+    });
+
+    return segments;
+  }, []);
 
   return (
     <DashboardSectionCard
@@ -38,26 +59,20 @@ export function DashboardCategoryChart() {
           />
 
           <g transform="rotate(-90 90 90)">
-            {salesByCategory.map((segment) => {
-              const dash = (segment.value / 100) * circumference;
-              const strokeDasharray = `${dash} ${circumference - dash}`;
-              const element = (
-                <circle
-                  key={segment.name}
-                  cx="90"
-                  cy="90"
-                  r={radius}
-                  fill="none"
-                  stroke={segmentColors[segment.tone]}
-                  strokeWidth="22"
-                  strokeDasharray={strokeDasharray}
-                  strokeDashoffset={-cumulativeOffset}
-                  strokeLinecap="butt"
-                />
-              );
-              cumulativeOffset += dash;
-              return element;
-            })}
+            {chartSegments.map((segment) => (
+              <circle
+                key={segment.name}
+                cx="90"
+                cy="90"
+                r={radius}
+                fill="none"
+                stroke={segmentColors[segment.tone]}
+                strokeWidth="22"
+                strokeDasharray={`${segment.dash} ${circumference - segment.dash}`}
+                strokeDashoffset={segment.strokeDashoffset + segment.dash}
+                strokeLinecap="butt"
+              />
+            ))}
           </g>
 
           <circle cx="90" cy="90" r="38" className="fill-white" />

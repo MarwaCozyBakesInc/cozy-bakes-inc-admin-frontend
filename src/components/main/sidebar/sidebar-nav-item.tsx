@@ -83,10 +83,10 @@ export function SidebarNavItem({
 
         {expanded ? (
           <div className="mt-2 space-y-1.5 rounded-2xl bg-transparent">
-            {item.children?.map((childLabel, index) => (
-              <button
-                key={childLabel}
-                type="button"
+            {item.children?.map((child, index) => (
+              <Link
+                key={child.label}
+                href={child.href}
                 className={cn(
                   "flex h-10 w-full items-center rounded-[14px] px-4 text-left text-xs transition-colors",
                   index === 0
@@ -95,8 +95,8 @@ export function SidebarNavItem({
                 )}
                 onClick={onSelect}
               >
-                {childLabel}
-              </button>
+                {child.label}
+              </Link>
             ))}
 
             <button

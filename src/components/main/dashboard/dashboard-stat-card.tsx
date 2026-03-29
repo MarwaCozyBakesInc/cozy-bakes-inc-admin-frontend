@@ -1,6 +1,13 @@
-import type { DashboardStat } from "./dashboard-data";
+import type { DashboardStatCardProps } from "@/interfaces/main/dashboard";
+import type { DashboardStatTone } from "@/types/main/dashboard";
 
-const toneClasses = {
+const toneClasses: Record<
+  DashboardStatTone,
+  {
+    iconWrap: string;
+    trend: string;
+  }
+> = {
   primary: {
     iconWrap: "bg-primary/12 text-primary",
     trend: "bg-primary/10 text-primary",
@@ -17,10 +24,6 @@ const toneClasses = {
     iconWrap: "bg-gray/12 text-muted-text",
     trend: "bg-primary/10 text-primary",
   },
-} as const;
-
-type DashboardStatCardProps = {
-  stat: DashboardStat;
 };
 
 export function DashboardStatCard({ stat }: DashboardStatCardProps) {

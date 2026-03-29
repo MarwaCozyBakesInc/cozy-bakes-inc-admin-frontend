@@ -1,4 +1,4 @@
-import { weeklySales } from "./dashboard-data";
+import { weeklySales } from "@/data/main/dashboard";
 import { DashboardSectionCard } from "./dashboard-shared";
 
 const chartHeight = 280;
