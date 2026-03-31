@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import type { OrdersCardGridProps } from "@/interfaces/main/orders";
 import type { OrderStatus } from "@/types/main/orders";
+import { Button } from "@/components/ui/button";
 
 const cardStatusClasses: Record<OrderStatus, string> = {
   New: "bg-[#DBEAFF] text-[#1570EF]",
@@ -157,21 +158,24 @@ export function OrdersCardGrid({ orders }: OrdersCardGridProps) {
           </div>
 
           <div className="flex items-center gap-3 px-3 pb-3">
-            <button
+            <Button
               type="button"
+              variant="ghost"
               aria-label={`View ${order.id}`}
               className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[8px] bg-primary px-4 text-sm font-semibold text-white"
             >
               <Eye className="size-4" />
               <span>View Details</span>
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              variant="ghost"
+              size="icon"
               aria-label={`Delete ${order.id}`}
               className="inline-flex size-11 items-center justify-center rounded-[8px] bg-[#FEF3F2] text-[#F04438]"
             >
               <Trash2 className="size-5" />
-            </button>
+            </Button>
           </div>
         </article>
       ))}

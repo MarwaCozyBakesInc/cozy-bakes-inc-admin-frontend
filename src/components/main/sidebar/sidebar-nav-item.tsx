@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { SidebarItem } from "@/data";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   SidebarChevron,
@@ -28,13 +29,13 @@ export function SidebarNavItem({
   const parentHighlighted = active;
 
   const sharedClassName = cn(
-    "group flex w-full shrink-0 items-center rounded-[14px] text-left transition-colors",
+    "group flex w-full shrink-0 items-center text-left transition-colors",
     compact
-      ? "h-[50px] justify-center px-3"
+      ? "h-[50px] justify-center rounded-[16px] px-3"
       : "h-[50.5px] px-4 pr-5",
     active
-      ? "bg-primary text-white shadow-[0_12px_24px_rgba(209,150,40,0.22)]"
-      : "text-muted-text hover:bg-white/80 hover:text-light-chocolate"
+      ? "rounded-full bg-primary text-white shadow-[0_12px_24px_rgba(209,150,40,0.22)]"
+      : "rounded-[14px] text-muted-text hover:bg-white/80 hover:text-light-chocolate"
   );
 
   if (hasChildren && !compact) {
@@ -47,12 +48,13 @@ export function SidebarNavItem({
             : "rounded-[14px] bg-transparent p-0 shadow-none",
         )}
       >
-        <button
+        <Button
           type="button"
+          variant="ghost"
           className={cn(
             "flex h-[50.5px] w-full shrink-0 items-center rounded-[14px] px-4 pr-5 text-left transition-colors",
             parentHighlighted
-              ? "bg-primary text-white shadow-[0_12px_24px_rgba(209,150,40,0.22)]"
+              ? "rounded-full bg-primary text-white shadow-[0_12px_24px_rgba(209,150,40,0.22)]"
               : "text-muted-text hover:bg-white/80 hover:text-light-chocolate",
           )}
           onClick={() => setExpanded((current) => !current)}
@@ -79,7 +81,7 @@ export function SidebarNavItem({
             )}
             collapsed={false}
           />
-        </button>
+        </Button>
 
         {expanded ? (
           <div className="mt-2 space-y-1.5 rounded-2xl bg-transparent">
@@ -99,14 +101,15 @@ export function SidebarNavItem({
               </Link>
             ))}
 
-            <button
+            <Button
               type="button"
+              variant="ghost"
               className="mt-1 flex h-10 w-full items-center justify-center gap-2 rounded-2xl bg-bg-creamy px-4 text-xs font-medium text-primary transition-colors hover:bg-bg-creamy/80"
               onClick={onSelect}
             >
               <SidebarPlusIcon />
               <span>{item.ctaLabel}</span>
-            </button>
+            </Button>
           </div>
         ) : null}
       </div>
@@ -160,13 +163,14 @@ export function SidebarNavItem({
   }
 
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
       className={sharedClassName}
       onClick={onSelect}
       title={compact ? item.label : undefined}
     >
       {content}
-    </button>
+    </Button>
   );
 }

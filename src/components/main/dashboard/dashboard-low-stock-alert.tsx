@@ -1,12 +1,13 @@
 import { ArrowRight } from "lucide-react";
 import { lowStockProducts, stockAlert } from "@/data/main/dashboard";
+import { Button } from "@/components/ui/button";
 import { DashboardProductThumb } from "./dashboard-shared";
 
 export function DashboardLowStockAlert() {
   const Icon = stockAlert.icon;
 
   return (
-    <section className="rounded-[24px] bg-bg-creamy p-4 shadow-[0_18px_40px_rgba(209,150,40,0.08)] md:p-5">
+    <section className="rounded-[20px] bg-bg-creamy p-3.5 shadow-[0_18px_40px_rgba(209,150,40,0.08)] md:rounded-[24px] md:p-5">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="flex items-start gap-3">
           <div className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-primary text-white">
@@ -23,16 +24,17 @@ export function DashboardLowStockAlert() {
           </div>
         </div>
 
-        <button
+        <Button
           type="button"
+          variant="ghost"
           className="inline-flex items-center gap-1 self-start rounded-full bg-white px-4 py-2 text-xs font-semibold text-primary shadow-[0_12px_24px_rgba(209,150,40,0.12)] transition-colors hover:bg-primary/10 md:text-sm"
         >
           <span>Manage Stock</span>
           <ArrowRight className="size-4" />
-        </button>
+        </Button>
       </div>
 
-      <div className="mt-4 grid gap-3 xl:grid-cols-4">
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {lowStockProducts.map((product) => (
           <article
             key={product.name}

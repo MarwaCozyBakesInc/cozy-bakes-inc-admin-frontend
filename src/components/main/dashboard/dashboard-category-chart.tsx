@@ -45,10 +45,15 @@ export function DashboardCategoryChart() {
     <DashboardSectionCard
       title="Sales by Category"
       description="This month&apos;s distribution"
-      className="min-h-[430px]"
+      className="min-h-[320px] md:min-h-[430px]"
     >
-      <div className="relative mx-auto mt-2 flex w-full max-w-[290px] justify-center">
-        <svg viewBox="0 0 180 180" className="size-[220px]" role="img" aria-label="Sales by category chart">
+      <div className="relative mx-auto mt-2 flex w-full max-w-[250px] justify-center sm:max-w-[290px]">
+        <svg
+          viewBox="0 0 180 180"
+          className="size-[180px] sm:size-[220px]"
+          role="img"
+          aria-label="Sales by category chart"
+        >
           <circle
             cx="90"
             cy="90"
@@ -78,13 +83,13 @@ export function DashboardCategoryChart() {
           <circle cx="90" cy="90" r="38" className="fill-white" />
         </svg>
 
-        <div className="absolute top-4 right-0 rounded-[16px] bg-bg-creamy px-3 py-2 text-xs shadow-[0_10px_24px_rgba(209,150,40,0.12)]">
+        <div className="absolute right-0 top-3 rounded-[14px] bg-bg-creamy px-2.5 py-1.5 text-[11px] shadow-[0_10px_24px_rgba(209,150,40,0.12)] sm:top-4 sm:rounded-[16px] sm:px-3 sm:py-2 sm:text-xs">
           <p className="text-[11px] font-bold text-dark md:text-xs">Breads</p>
           <p className="mt-0.5 text-[11px] font-semibold text-primary md:text-xs">Sales: 35%</p>
         </div>
       </div>
 
-      <div className="mt-3 space-y-3">
+      <div className="mt-3 space-y-2.5 sm:space-y-3">
         {salesByCategory.map((segment) => (
           <div key={segment.name} className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">

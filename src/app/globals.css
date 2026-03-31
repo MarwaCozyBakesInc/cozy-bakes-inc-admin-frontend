@@ -14,6 +14,12 @@
   --color-light-chocolate: #7b3306;
   --color-taupe-brown: #6b5b4c;
   --color-warm-brown: #6b5844;
+  --color-market-panel: #615e59;
+  --color-market-panel-muted: #8a847d;
+  --color-market-shell: rgba(250, 248, 243, 0.12);
+  --color-market-tag: #fff5eb;
+  --color-market-tag-foreground: #e67e22;
+  --color-market-outline: #eedb9a;
   --color-danger-soft: #fef3f2;
   --color-danger: #ff6b5f;
   --color-info-soft: #f0f9ff;

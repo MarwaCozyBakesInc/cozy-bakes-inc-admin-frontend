@@ -3,6 +3,7 @@
 import { type ReactNode, useState } from "react";
 import { usePathname } from "next/navigation";
 import { sidebarItems } from "@/data";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { SidebarBrand } from "./sidebar-brand";
 import { SidebarNav } from "./sidebar-nav";
@@ -91,14 +92,16 @@ export function SidebarShell({ children }: SidebarShellProps) {
           />
         </div>
 
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-xs"
           onClick={() => setMediumExpanded((current) => !current)}
           className="absolute top-50 -right-2.5 inline-flex size-5 items-center justify-center rounded-full border border-primary bg-background text-primary shadow-sm"
           aria-label={mediumExpanded ? "Collapse sidebar" : "Expand sidebar"}
         >
           <SidebarToggleIcon expanded={mediumExpanded} />
-        </button>
+        </Button>
       </aside>
 
       <aside
@@ -114,14 +117,16 @@ export function SidebarShell({ children }: SidebarShellProps) {
           />
         </div>
 
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-sm"
           onClick={() => setDesktopExpanded((current) => !current)}
           className="absolute top-50 -right-2.5 inline-flex size-6 items-center justify-center rounded-full border border-primary bg-background text-primary shadow-sm"
           aria-label={desktopExpanded ? "Collapse sidebar" : "Expand sidebar"}
         >
           <SidebarToggleIcon expanded={desktopExpanded} />
-        </button>
+        </Button>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">

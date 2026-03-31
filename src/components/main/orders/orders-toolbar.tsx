@@ -5,6 +5,7 @@ import type {
   OrdersToolbarProps,
   OrdersViewToggleOption,
 } from "@/interfaces/main/orders";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib";
 
 const viewOptions: OrdersViewToggleOption[] = [
@@ -43,9 +44,10 @@ export function OrdersToolbar({
           const isActive = option.value === viewMode;
 
           return (
-            <button
+            <Button
               key={option.value}
               type="button"
+              variant="ghost"
               onClick={() => onViewModeChange(option.value)}
               className={cn(
                 "inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-[999px] text-sm font-semibold tracking-[-0.02em] transition-colors",
@@ -56,7 +58,7 @@ export function OrdersToolbar({
             >
               {option.icon}
               <span>{option.label}</span>
-            </button>
+            </Button>
           );
         })}
       </div>

@@ -1,5 +1,6 @@
 import { Eye, Trash2 } from "lucide-react";
 import type { OrdersTableProps } from "@/interfaces/main/orders";
+import { Button } from "@/components/ui/button";
 import { OrdersStatusBadge } from "./orders-status-badge";
 
 const tableHeaders = [
@@ -61,20 +62,24 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                 </td>
                 <td className="border-b border-border/15 px-5 py-4">
                   <div className="flex items-center justify-center gap-2">
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="icon"
                       aria-label={`Delete ${order.id}`}
                       className="inline-flex size-11 items-center justify-center rounded-[10px] bg-[#FEF3F2] text-[#F04438] transition-transform hover:-translate-y-0.5"
                     >
                       <Trash2 className="size-5" />
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="icon"
                       aria-label={`View ${order.id}`}
                       className="inline-flex size-11 items-center justify-center rounded-[10px] bg-primary text-white transition-transform hover:-translate-y-0.5"
                     >
                       <Eye className="size-5" />
-                    </button>
+                    </Button>
                   </div>
                 </td>
               </tr>

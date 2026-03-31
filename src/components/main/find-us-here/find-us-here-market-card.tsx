@@ -1,0 +1,96 @@
+import Image from "next/image";
+import { CalendarDays, Eye, MapPin, PencilLine, Trash2 } from "lucide-react";
+import type {
+  FindUsHereActionButtonProps,
+  FindUsHereMarketCardProps,
+} from "@/interfaces/main/find-us-here";
+import { Button } from "@/components/ui/button";
+
+function FindUsHereActionButton({
+  children,
+  variant = "primary",
+}: FindUsHereActionButtonProps) {
+  const variantClassName =
+    variant === "primary"
+      ? "bg-primary text-white hover:bg-primary/90"
+      : variant === "danger"
+        ? "bg-danger-soft text-danger hover:bg-danger-soft/80"
+        : "border border-primary/15 bg-[#fbf8eb80] text-primary hover:bg-[#fbf8eb]";
+
+  return (
+    <Button
+      type="button"
+      variant="ghost"
+      className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${variantClassName}`}
+    >
+      {children}
+    </Button>
+  );
+}
+
+export function FindUsHereMarketCard({
+  location,
+}: FindUsHereMarketCardProps) {
+  return (
+    <article className="overflow-hidden rounded-2xl bg-background shadow-[0_1px_2px_rgba(16,24,40,0.05),0_0_0_4px_rgba(209,150,40,0.05)]">
+      <div className="grid lg:grid-cols-[1.02fr_1fr]">
+        <div className="relative min-h-72">
+          <Image
+            src={location.imageSrc}
+            alt={location.imageAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 48vw"
+          />
+        </div>
+
+        <div className="flex flex-col justify-center gap-6 p-6 md:p-8">
+          <div className="space-y-4">
+            <span className="inline-flex h-8 items-center rounded-full bg-market-tag px-4 text-sm font-medium text-market-tag-foreground">
+              {location.badge}
+            </span>
+
+            <div className="space-y-4">
+              <h2 className="text-[28px] font-semibold leading-8 tracking-[-0.02em] text-dark">
+                {location.title}
+              </h2>
+
+              <div className="rounded-2xl border border-market-outline bg-[#fbf8eb26] px-4 py-3">
+                <p className="text-xs font-semibold italic leading-5 text-primary">
+                  {location.description}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3 text-sm font-semibold text-muted-text">
+            <div className="flex items-center gap-2">
+              <CalendarDays className="size-4 text-primary" strokeWidth={2} />
+              <span>{location.schedule}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="size-4 text-primary" strokeWidth={2} />
+              <span>{location.address}</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <FindUsHereActionButton>
+              <PencilLine className="size-4" strokeWidth={2} />
+              Edit Market Details
+            </FindUsHereActionButton>
+
+            <FindUsHereActionButton variant="secondary">
+              <Eye className="size-4" strokeWidth={2} />
+              Preview Market Details
+            </FindUsHereActionButton>
+
+            <FindUsHereActionButton variant="danger">
+              <Trash2 className="size-4" strokeWidth={2} />
+            </FindUsHereActionButton>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}

@@ -35,19 +35,19 @@ export function DashboardSalesOverview() {
     <DashboardSectionCard
       title="Sales Overview"
       description="Daily performance this week"
-      className="min-h-[430px]"
+      className="min-h-[320px] md:min-h-[430px]"
     >
-      <div className="flex justify-end">
+      <div className="flex justify-start sm:justify-end">
         <div className="inline-flex items-center gap-2 rounded-full bg-bg-creamy px-3 py-1.5 text-xs font-semibold text-chocolate">
           <span className="size-2 rounded-full bg-primary" />
           Revenue
         </div>
       </div>
 
-      <div className="mt-3 overflow-x-auto">
+      <div className="-mx-1 mt-3 overflow-x-auto px-1">
         <svg
           viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-          className="h-[300px] min-w-[520px] w-full"
+          className="h-[220px] min-w-[360px] w-full sm:h-[260px] sm:min-w-[420px] md:h-[300px] md:min-w-[520px]"
           role="img"
           aria-label="Weekly sales overview chart"
         >

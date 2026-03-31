@@ -8,19 +8,27 @@ import { DashboardTopProducts } from "./dashboard-top-products";
 
 function Dashboard() {
   return (
-    <div className="space-y-6 xl:space-y-7">
+    <div className="space-y-4 md:space-y-6 xl:space-y-7">
       <DashboardHeader />
       <DashboardStatsGrid />
       <DashboardLowStockAlert />
 
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(320px,0.85fr)]">
-        <DashboardSalesOverview />
-        <DashboardCategoryChart />
+      <div className="grid gap-4 md:gap-6 2xl:grid-cols-[minmax(0,1.65fr)_minmax(320px,0.85fr)]">
+        <div className="min-w-0">
+          <DashboardSalesOverview />
+        </div>
+        <div className="min-w-0">
+          <DashboardCategoryChart />
+        </div>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        <DashboardRecentOrders />
-        <DashboardTopProducts />
+      <div className="grid gap-4 md:gap-6 2xl:grid-cols-2">
+        <div className="min-w-0">
+          <DashboardRecentOrders />
+        </div>
+        <div className="min-w-0">
+          <DashboardTopProducts />
+        </div>
       </div>
     </div>
   );

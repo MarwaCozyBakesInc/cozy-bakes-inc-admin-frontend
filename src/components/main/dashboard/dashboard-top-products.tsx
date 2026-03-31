@@ -13,7 +13,7 @@ export function DashboardTopProducts() {
         {topProducts.map((product) => (
           <article
             key={`${product.rank}-${product.name}`}
-            className="flex items-center gap-4 rounded-[18px] border border-border/20 bg-white px-4 py-3 shadow-[0_10px_22px_rgba(209,150,40,0.06)]"
+            className="flex flex-col gap-3 rounded-[18px] border border-border/20 bg-white px-4 py-3 shadow-[0_10px_22px_rgba(209,150,40,0.06)] sm:flex-row sm:items-center sm:gap-4"
           >
             <div className="flex size-10 shrink-0 items-center justify-center rounded-[14px] bg-primary/12 text-sm font-bold text-primary">
               #{product.rank}
@@ -31,7 +31,7 @@ export function DashboardTopProducts() {
               </div>
             </div>
 
-            <div className="text-right">
+            <div className="text-left sm:text-right">
               <p className="text-[18px] font-bold tracking-[-0.03em] text-primary md:text-[20px]">
                 {product.revenue}
               </p>

@@ -1,5 +1,6 @@
 import { PackageSearch, RefreshCcw, SearchX } from "lucide-react";
 import type { OrdersEmptyStateProps } from "@/interfaces/main/orders";
+import { Button } from "@/components/ui/button";
 
 export function OrdersEmptyState({
   hasSearch,
@@ -72,25 +73,27 @@ export function OrdersEmptyState({
 
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row">
           {hasSearch ? (
-            <button
+            <Button
               type="button"
+              variant="ghost"
               onClick={onClearSearch}
               className="inline-flex h-12 items-center justify-center gap-2 rounded-[999px] bg-primary px-6 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(209,150,40,0.22)] transition-transform hover:-translate-y-0.5"
             >
               <SearchX className="size-4" />
               <span>Clear Search</span>
-            </button>
+            </Button>
           ) : null}
 
           {(hasFilteredStatus || hasSearch) ? (
-            <button
+            <Button
               type="button"
+              variant="ghost"
               onClick={onResetFilters}
               className="inline-flex h-12 items-center justify-center gap-2 rounded-[999px] border border-primary/20 bg-white px-6 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
             >
               <RefreshCcw className="size-4" />
               <span>Show All Orders</span>
-            </button>
+            </Button>
           ) : null}
         </div>
       </div>

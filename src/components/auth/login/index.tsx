@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { loginSchema, type LoginSchemaValues } from "@/schemas";
 import { loginAPI } from "@/services/mutations/auth";
+import { Button } from "@/components/ui/button";
 import { LoginHeader } from "./login-header";
 import { LoginInputField } from "./login-input-field";
 import { LoginOptions } from "./login-options";
@@ -77,10 +78,12 @@ export default function Login() {
               },
             })}
             endAdornment={
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon"
                 onClick={() => setShowPassword((value) => !value)}
-                className="cursor-pointer text-primary outline-none transition-opacity hover:opacity-80"
+                className="size-5 cursor-pointer rounded-none p-0 text-primary outline-none hover:bg-transparent hover:opacity-80"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
@@ -88,7 +91,7 @@ export default function Login() {
                 ) : (
                   <Eye className="size-5" strokeWidth={1.8} />
                 )}
-              </button>
+              </Button>
             }
           />
         </div>

@@ -69,7 +69,7 @@ function Categories({ activeSlug }: CategoriesProps) {
       )}
 
       {!selectedCategory ? (
-        <div className="flex justify-center pt-2">
+        <div className="flex justify-center overflow-x-auto pt-2">
           <CategoriesPagination currentPage={1} pages={categoryPagination} />
         </div>
       ) : null}

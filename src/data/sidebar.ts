@@ -88,11 +88,13 @@ export const sidebarItems: SidebarItem[] = [
     id: "customers",
     label: "Customers",
     icon: "customers",
+    href: "/customers",
   },
   {
     id: "find-us",
-    label: "Find Us Her",
+    label: "Find Us Here",
     icon: "location",
+    href: "/find-us-here",
   },
   {
     id: "our-menu",
@@ -103,6 +105,7 @@ export const sidebarItems: SidebarItem[] = [
     id: "reports",
     label: "Reports",
     icon: "reports",
+    href: "/reports",
   },
   {
     id: "reviews",
@@ -113,11 +116,13 @@ export const sidebarItems: SidebarItem[] = [
     id: "contact",
     label: "Contact us",
     icon: "contact",
+    href: "/contact-us",
   },
   {
     id: "settings",
     label: "Settings",
     icon: "settings",
+    href: "/settings",
   },
 ] as const;
 

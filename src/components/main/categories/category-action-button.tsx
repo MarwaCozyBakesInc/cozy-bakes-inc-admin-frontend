@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { CategoryActionButtonProps } from "@/interfaces/main/categories";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib";
 
 export function CategoryActionButton({
@@ -24,8 +25,8 @@ export function CategoryActionButton({
   }
 
   return (
-    <button type="button" aria-label={label} className={className}>
+    <Button type="button" variant="ghost" size="icon" aria-label={label} className={className}>
       {icon}
-    </button>
+    </Button>
   );
 }

@@ -3,6 +3,7 @@ import type {
   CategorySearchToolbarProps,
   CategoryViewToggleOption,
 } from "@/interfaces/main/categories";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib";
 
 const viewToggleOptions: CategoryViewToggleOption[] = [
@@ -42,9 +43,10 @@ export function CategorySearchToolbar({
             const isActive = option.value === viewMode;
 
             return (
-              <button
+              <Button
                 key={option.value}
                 type="button"
+                variant="ghost"
                 onClick={() => onViewModeChange(option.value)}
                 className={cn(
                   "inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors xl:flex-none xl:min-w-[92px]",
@@ -55,7 +57,7 @@ export function CategorySearchToolbar({
               >
                 {option.icon}
                 <span>{option.label}</span>
-              </button>
+              </Button>
             );
           })}
         </div>

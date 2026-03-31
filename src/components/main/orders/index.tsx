@@ -73,7 +73,7 @@ function Orders() {
       )}
 
       {!hasEmptyState ? (
-        <div className="flex justify-center pt-2">
+        <div className="flex justify-center overflow-x-auto pt-2">
           <OrdersPagination currentPage={1} pages={ordersPagination} />
         </div>
       ) : null}
