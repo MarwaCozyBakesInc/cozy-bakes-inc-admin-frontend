@@ -1,6 +1,9 @@
 import type { ReactNode } from "react";
 import type {
+  ApiOrderStatus,
   OrderFilterValue,
+  OrderPaymentMethod,
+  OrderPaymentStatus,
   OrderStatus,
   OrderViewMode,
 } from "@/types/main/orders";
@@ -70,4 +73,49 @@ export interface OrdersEmptyStateProps {
   viewMode: OrderViewMode;
   onResetFilters: () => void;
   onClearSearch: () => void;
+}
+
+export interface OrdersPaginationLink {
+  url: string | null;
+  label: string;
+  page: number | null;
+  active: boolean;
+}
+
+export interface OrderListItem {
+  id: number;
+  order_number: string;
+  customer_name: string;
+  customer_phone: string | null;
+  customer_email: string;
+  total_quantity: string;
+  subtotal: string;
+  delivery_fee: string;
+  total_amount: string;
+  status: ApiOrderStatus;
+  payment_status: OrderPaymentStatus;
+  payment_method: OrderPaymentMethod;
+  created_at: string;
+}
+
+export interface OrdersPaginationData {
+  current_page: number;
+  data: OrderListItem[];
+  first_page_url: string;
+  from: number | null;
+  last_page: number;
+  last_page_url: string;
+  links: OrdersPaginationLink[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number | null;
+  total: number;
+}
+
+export interface OrdersApiResponse {
+  status: string;
+  message: string;
+  data: OrdersPaginationData;
 }

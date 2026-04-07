@@ -51,6 +51,25 @@ export function DashboardTopProducts() {
     );
   }
 
+  if (topProducts.length === 0) {
+    return (
+      <DashboardSectionCard
+        title="Top Products"
+        description="Best performers this week"
+        actionLabel="View All"
+      >
+        <div className="flex min-h-[220px] items-center justify-center rounded-[18px] border border-dashed border-border/30 bg-white/70 px-6 text-center">
+          <div className="space-y-2">
+            <p className="text-base font-semibold text-dark">No top products yet</p>
+            <p className="text-sm text-muted-text">
+              Product performance data will appear here once sales are recorded.
+            </p>
+          </div>
+        </div>
+      </DashboardSectionCard>
+    );
+  }
+
   return (
     <DashboardSectionCard
       title="Top Products"
