@@ -37,9 +37,9 @@ export function useTopProducts() {
   );
 }
 
-export function useLowStockProducts(threshold: number) {
+export function useLowStockProducts(threshold: number = 5) {
   return useCustomInfiniteQuery(
-    ["low-stock-products"],
+    ["low-stock-products", threshold],
     async ({ pageParam = 1 }) => {
       return lowStockProductsAPI(threshold, pageParam);
     },
