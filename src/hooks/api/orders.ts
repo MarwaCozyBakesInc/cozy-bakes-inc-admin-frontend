@@ -2,11 +2,11 @@ import { listOrdersAPI } from "@/services/queries/orders";
 import { useCustomInfiniteQuery } from "../useCustomQuery";
 import { OrderSort } from "@/types/main/orders";
 
-export function useOrders(sort: OrderSort) {
+export function useOrders(sort?: OrderSort) {
   return useCustomInfiniteQuery(
     ["orders", sort],
     async ({ pageParam = 1 }) => {
-      return listOrdersAPI(sort, pageParam);
+      return listOrdersAPI(pageParam, sort);
     },
     {
       initialPageParam: 1,

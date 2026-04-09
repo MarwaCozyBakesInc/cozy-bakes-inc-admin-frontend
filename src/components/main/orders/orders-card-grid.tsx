@@ -10,15 +10,7 @@ import {
 import type { OrdersCardGridProps } from "@/interfaces/main/orders";
 import type { OrderStatus } from "@/types/main/orders";
 import { Button } from "@/components/ui/button";
-
-const cardStatusClasses: Record<OrderStatus, string> = {
-  New: "bg-[#DBEAFF] text-[#1570EF]",
-  Preparing: "bg-[#FFF7E6] text-[#D69618]",
-  Ready: "bg-[#F4F0FF] text-[#7A5AF8]",
-  Shipped: "bg-[#EEF4FF] text-[#175CD3]",
-  Delivered: "bg-[#ECFDF3] text-[#12B76A]",
-  Cancelled: "bg-[#FEF3F2] text-[#F04438]",
-};
+import { OrdersStatusSelect } from "./orders-status-select";
 
 const workflow = ["New", "Preparing", "Ready", "Delivered"] as const;
 
@@ -65,7 +57,10 @@ function getStepIcon(step: (typeof workflow)[number], currentStatus: OrderStatus
   }
 }
 
-export function OrdersCardGrid({ orders }: OrdersCardGridProps) {
+export function OrdersCardGrid({
+  orders,
+  onStatusChangeRequest,
+}: OrdersCardGridProps) {
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {orders.map((order) => (
@@ -82,11 +77,12 @@ export function OrdersCardGrid({ orders }: OrdersCardGridProps) {
                 <p className="text-sm font-bold text-gray">{order.id}</p>
               </div>
 
-              <span
-                className={`inline-flex items-center rounded-[10px] px-3 py-2 text-xs font-bold ${cardStatusClasses[order.status]}`}
-              >
-                {order.status}
-              </span>
+              <div className="shrink-0">
+                <OrdersStatusSelect
+                  status={order.status}
+                  onChangeRequest={(status) => onStatusChangeRequest(order, status)}
+                />
+              </div>
             </div>
           </div>
 

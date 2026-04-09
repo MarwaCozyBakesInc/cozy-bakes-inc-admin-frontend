@@ -46,14 +46,23 @@ export interface OrdersToolbarProps {
 
 export interface OrdersStatusBadgeProps {
   status: OrderStatus;
+  onChangeRequest: (status: OrderStatus) => void;
+}
+
+export interface PendingOrderStatusUpdate {
+  orderId: string;
+  customer: string;
+  nextStatus: OrderStatus;
 }
 
 export interface OrdersTableProps {
   orders: OrderRecord[];
+  onStatusChangeRequest: (order: OrderRecord, status: OrderStatus) => void;
 }
 
 export interface OrdersCardGridProps {
   orders: OrderRecord[];
+  onStatusChangeRequest: (order: OrderRecord, status: OrderStatus) => void;
 }
 
 export interface OrdersPaginationProps {

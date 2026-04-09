@@ -21,12 +21,12 @@ export const contactUsSections: ContactUsSection[] = [
     fields: [
       {
         id: "hero-title",
-        label: "Hero Section Titel",
+        label: "Hero Section Title",
         value: "Freshly Baked , Locally Found",
       },
       {
         id: "hero-subtitle",
-        label: "Hero Section Sub Titel",
+        label: "Hero Section Sub Title",
         value:
           "We bring the warmth of our oven to local squares across the city. Come say hello and taste the season's best.",
         multiline: true,

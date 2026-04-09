@@ -2,8 +2,7 @@ import type { CustomersCanvasProps } from "@/interfaces/main/customers";
 import { cn } from "@/lib/utils";
 
 const canvasVariantClasses = {
-  overview:
-    "bg-transparent border-primary/10",
+  overview: "bg-transparent border-primary/10",
 } as const;
 
 export function CustomersCanvas({

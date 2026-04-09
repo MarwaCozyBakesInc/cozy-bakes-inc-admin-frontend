@@ -1,7 +1,7 @@
 import { Eye, Trash2 } from "lucide-react";
 import type { OrdersTableProps } from "@/interfaces/main/orders";
 import { Button } from "@/components/ui/button";
-import { OrdersStatusBadge } from "./orders-status-badge";
+import { OrdersStatusSelect } from "./orders-status-select";
 
 const tableHeaders = [
   "Order ID",
@@ -13,7 +13,7 @@ const tableHeaders = [
   "Actions",
 ];
 
-export function OrdersTable({ orders }: OrdersTableProps) {
+export function OrdersTable({ orders, onStatusChangeRequest }: OrdersTableProps) {
   return (
     <div className="overflow-hidden rounded-[12px]">
       <div className="overflow-x-auto">
@@ -52,7 +52,10 @@ export function OrdersTable({ orders }: OrdersTableProps) {
                   {order.total}
                 </td>
                 <td className="border-b border-border/15 px-5 py-4">
-                  <OrdersStatusBadge status={order.status} />
+                  <OrdersStatusSelect
+                    status={order.status}
+                    onChangeRequest={(status) => onStatusChangeRequest(order, status)}
+                  />
                 </td>
                 <td className="border-b border-border/15 px-5 py-4">
                   <div className="space-y-1.5">

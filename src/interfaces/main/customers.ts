@@ -108,3 +108,27 @@ export interface CustomerDirectoryState {
   exportLabel: string;
   paginationPages: number[];
 }
+
+export interface CustomerOverviewCountMetric {
+  count: number;
+  growth_percentage: number;
+}
+
+export interface CustomerOverviewNoteMetric {
+  count: number;
+  note: string;
+}
+
+export interface CustomersOverviewStatsData {
+  total_customers: CustomerOverviewCountMetric;
+  registered_only: CustomerOverviewCountMetric;
+  repeat_customers: CustomerOverviewCountMetric;
+  inactive_customers: CustomerOverviewNoteMetric;
+  vip_customers: CustomerOverviewNoteMetric;
+}
+
+export interface CustomersOverviewStatsResponse {
+  status: string;
+  message: string;
+  data: CustomersOverviewStatsData;
+}
