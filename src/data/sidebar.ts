@@ -111,6 +111,7 @@ export const sidebarItems: SidebarItem[] = [
     id: "reviews",
     label: "Reviews",
     icon: "reviews",
+    href: "/reviews",
   },
   {
     id: "contact",

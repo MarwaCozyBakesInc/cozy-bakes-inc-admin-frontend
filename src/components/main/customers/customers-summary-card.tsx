@@ -46,7 +46,7 @@ export function CustomersSummaryCard({
     <article className="relative overflow-hidden rounded-2xl border border-primary/10 bg-[color-mix(in_srgb,var(--color-bg-creamy)_10%,transparent)] p-4 shadow-[inset_0_1px_0_color-mix(in_srgb,var(--color-background)_24%,transparent)]">
       <div className="absolute inset-y-0 right-0 w-28 bg-[linear-gradient(135deg,transparent_0%,color-mix(in_srgb,var(--color-background)_5%,transparent)_100%)]" />
 
-      <div className="relative flex items-start justify-between">
+      <div className="relative flex flex-col items-start gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div
           className={cn(
             "flex size-14 items-center justify-center rounded-2xl",
@@ -58,14 +58,14 @@ export function CustomersSummaryCard({
 
         <div
           className={cn(
-            "inline-flex h-7 items-center gap-1 rounded-full px-2.5 text-xs font-bold",
+            "inline-flex min-h-7 max-w-full items-center gap-1 self-start rounded-full px-2.5 py-1 text-xs font-bold break-words sm:max-w-[65%]",
             trendToneClasses[metric.trendTone],
           )}
         >
           {metric.trendTone === "negative" ? (
-            <TrendingDown className="size-3.5" strokeWidth={2.3} />
+            <TrendingDown className="mt-0.5 size-3.5 shrink-0" strokeWidth={2.3} />
           ) : null}
-          {metric.trendLabel}
+          <span className="leading-4 whitespace-normal">{metric.trendLabel}</span>
         </div>
       </div>
 

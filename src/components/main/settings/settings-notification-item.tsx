@@ -16,18 +16,20 @@ export function SettingsNotificationItem({
       role="switch"
       aria-checked={enabled}
       onClick={() => onToggle(preference.id)}
-      className="flex min-h-[70px] w-full items-center justify-between rounded-[14px] bg-bg-creamy px-4 py-3 text-left transition-transform hover:scale-[0.995]"
+      className="flex min-h-[82px] w-full items-start justify-between gap-4 rounded-[14px] bg-bg-creamy px-4 py-3 text-left transition-transform hover:scale-[0.995]"
     >
-      <div className="min-w-0">
+      <div className="min-w-0 flex-1 pr-2">
         <p className="text-sm font-semibold tracking-[-0.01em] text-dark">
           {preference.title}
         </p>
-        <p className="mt-0.5 text-xs text-muted-text">{preference.description}</p>
+        <p className="mt-0.5 break-words text-xs leading-5 text-muted-text">
+          {preference.description}
+        </p>
       </div>
 
       <span
         className={cn(
-          "relative inline-flex h-7 w-14 shrink-0 rounded-full p-0.5 transition-colors",
+          "relative mt-1 inline-flex h-7 w-14 shrink-0 rounded-full p-0.5 transition-colors",
           enabled ? "bg-[#d4af37]" : "bg-[#e5e7eb]",
         )}
       >

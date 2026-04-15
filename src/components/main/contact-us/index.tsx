@@ -1,8 +1,95 @@
-import { contactUsSections, contactUsWorkspace } from "@/data/main/contact-us";
+"use client";
+
+import { useMemo } from "react";
+import {
+  contactUsSections,
+  contactUsWorkspace,
+} from "@/data/main/contact-us";
+import type { ContactUsSection } from "@/interfaces/main/contact-us";
+import { Shimmer } from "@/components/ui/shimmer";
 import { ContactUsHeader } from "./contact-us-header";
 import { ContactUsSectionCard } from "./contact-us-section-card";
+import { useContactDetails } from "@/hooks/api";
 
 function ContactUs() {
+  const { data, isLoading } = useContactDetails();
+  const contactDetails = data?.data;
+  const resolvedSections: ContactUsSection[] = useMemo(() => {
+    const heroSection = contactDetails?.hero_section;
+    const contactSection = contactDetails?.contact_section;
+
+    return contactUsSections.map((section) => {
+      if (section.id === "hero-section") {
+        const hasHeroSectionData = Boolean(
+          heroSection?.hero_title ||
+            heroSection?.hero_subtitle ||
+            heroSection?.cover_image,
+        );
+
+        return {
+          ...section,
+          actionLabel: hasHeroSectionData
+            ? "Edit Hero Section"
+            : "Add Hero Section",
+          fields: [
+            {
+              id: "hero-title",
+              label: "Hero Section Title",
+              value: heroSection?.hero_title ?? "",
+            },
+            {
+              id: "hero-subtitle",
+              label: "Hero Section Sub Title",
+              value: heroSection?.hero_subtitle ?? "",
+              multiline: true,
+            },
+          ],
+          imageField: {
+            label: "Cover Image",
+            src: heroSection?.cover_image ?? "",
+            alt: heroSection?.hero_title ?? "Hero cover image",
+          },
+        };
+      }
+
+      const hasContactSectionData = Boolean(
+        contactSection?.contact_email ||
+          contactSection?.phone_number ||
+          contactSection?.location ||
+          contactSection?.image,
+      );
+
+      return {
+        ...section,
+        actionLabel: hasContactSectionData
+          ? "Edit Contact Data"
+          : "Add Contact Data",
+        fields: [
+          {
+            id: "contact-email",
+            label: "Contact Email",
+            value: contactSection?.contact_email ?? "",
+          },
+          {
+            id: "phone-number",
+            label: "Phone Number",
+            value: contactSection?.phone_number ?? "",
+          },
+          {
+            id: "location",
+            label: "Our Location",
+            value: contactSection?.location ?? "",
+          },
+        ],
+        imageField: {
+          label: "Contact Section Image",
+          src: contactSection?.image ?? "",
+          alt: "Contact section image",
+        },
+      };
+    });
+  }, [contactDetails]);
+
   return (
     <section className="space-y-5">
       <ContactUsHeader
@@ -11,9 +98,37 @@ function ContactUs() {
       />
 
       <div className="space-y-4">
-        {contactUsSections.map((section) => (
-          <ContactUsSectionCard key={section.id} section={section} />
-        ))}
+        {isLoading
+          ? Array.from({ length: 2 }).map((_, index) => (
+              <article
+                key={index}
+                className="rounded-2xl border-2 border-white/15 bg-[rgba(250,248,243,0.32)] p-4 shadow-[0_1px_0_rgba(255,255,255,0.06)_inset]"
+              >
+                <div className="space-y-4">
+                  <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+                    <div className="flex items-start gap-3">
+                      <Shimmer className="size-10 rounded-lg" />
+                      <div className="space-y-2 pt-0.5">
+                        <Shimmer className="h-5 w-44 rounded-md" />
+                        <Shimmer className="h-4 w-56 rounded-md" />
+                      </div>
+                    </div>
+                    <Shimmer className="h-10 w-40 rounded-full" />
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="grid gap-5 md:grid-cols-2">
+                      <Shimmer className="h-24 w-full rounded-2xl" />
+                      <Shimmer className="h-24 w-full rounded-2xl" />
+                    </div>
+                    <Shimmer className="h-[142px] w-[142px] rounded-3xl" />
+                  </div>
+                </div>
+              </article>
+            ))
+          : resolvedSections.map((section) => (
+                <ContactUsSectionCard key={section.id} section={section} />
+              ))}
       </div>
     </section>
   );

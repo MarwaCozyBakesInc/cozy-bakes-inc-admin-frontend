@@ -1,21 +1,35 @@
+"use client";
+
+import { useReportsSaleOverviewChart } from "@/hooks/api/reports";
+import { Shimmer } from "@/components/ui/shimmer";
 import {
   salesOverviewChart,
   salesOverviewHighlightIndex,
   salesOverviewPoints,
   salesOverviewTicks,
 } from "./reports-data";
-import {
-  buildLinePath,
-  getChartPointX,
-  getChartPointY,
-} from "./reports-utils";
+import { buildLinePath, getChartPointX, getChartPointY } from "./reports-utils";
 
 export function ReportsSalesOverviewChart() {
-  const points = salesOverviewPoints.map((point, index) => ({
+  const { data, isLoading } = useReportsSaleOverviewChart();
+  const salesOverviewData = data?.data?.sales_overview;
+  const hasSalesOverviewData =
+    salesOverviewData !== undefined &&
+    salesOverviewData.labels.length === salesOverviewData.revenues.length &&
+    salesOverviewData.labels.length > 0;
+  const resolvedPoints =
+    hasSalesOverviewData
+      ? salesOverviewData.labels.map((label, index) => ({
+          label,
+          value: salesOverviewData.revenues[index] ?? 0,
+        }))
+      : salesOverviewPoints;
+
+  const points = resolvedPoints.map((point, index) => ({
     ...point,
     x: getChartPointX(
       index,
-      salesOverviewPoints.length,
+      resolvedPoints.length,
       salesOverviewChart.width,
       salesOverviewChart.padding.left,
       salesOverviewChart.padding.right,
@@ -29,8 +43,13 @@ export function ReportsSalesOverviewChart() {
     ),
   }));
 
-  const highlightedPoint = points[salesOverviewHighlightIndex];
+  const highlightedPoint =
+    points[Math.min(salesOverviewHighlightIndex, points.length - 1)];
   const path = buildLinePath(points);
+
+  if (isLoading) {
+    return <Shimmer className="h-[220px] w-full rounded-2xl sm:h-[250px] md:h-[280px]" />;
+  }
 
   return (
     <div className="-mx-1 overflow-x-auto px-1">
@@ -111,13 +130,19 @@ export function ReportsSalesOverviewChart() {
           </g>
         ))}
 
-        <g transform={`translate(${highlightedPoint.x - 58} ${highlightedPoint.y - 70})`}>
+        <g
+          transform={`translate(${highlightedPoint.x - 58} ${highlightedPoint.y - 70})`}
+        >
           <rect width="118" height="48" rx="12" fill="#F7E6C0" />
           <text x="12" y="20" className="fill-[#615E59] text-[11px] font-bold">
-            Wednesday
+            {highlightedPoint.label}
           </text>
-          <text x="12" y="36" className="fill-[#D19628] text-[11px] font-semibold">
-            Revenue : $ 5,124
+          <text
+            x="12"
+            y="36"
+            className="fill-[#D19628] text-[11px] font-semibold"
+          >
+            {`Revenue : $ ${highlightedPoint.value}`}
           </text>
         </g>
       </svg>

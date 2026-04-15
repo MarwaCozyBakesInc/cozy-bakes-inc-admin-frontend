@@ -32,4 +32,9 @@ export type CustomerSegmentFilter =
   | "inactive"
   | "high-spenders";
 
-export type CustomerSortOption = "newest";
+export type CustomerSortOption =
+  | "newest"
+  | "oldest"
+  | "highest_spent"
+  | "most_orders"
+  | "last_order";

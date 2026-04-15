@@ -14,7 +14,7 @@ export function FindUsHereDaySection({
         type="button"
         variant="ghost"
         onClick={() => onToggle(day.id)}
-        className="flex w-full items-center justify-between gap-4 rounded-xl text-left"
+        className="flex w-full items-center justify-between gap-4 rounded-xl bg-transparent text-left hover:bg-transparent aria-expanded:bg-transparent"
         aria-expanded={expanded}
         aria-controls={`${day.id}-content`}
       >

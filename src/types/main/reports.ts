@@ -8,7 +8,7 @@ export type ReportMetricIcon =
 
 export type ReportChartSeries = "revenue" | "orders";
 
-export type ReportRange = "daily";
+export type ReportRange = "daily" | "weekly" | "monthly";
 
 export type ReportCategoryTone =
   | "breads"

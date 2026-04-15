@@ -4,5 +4,6 @@ export * from "./categories";
 export * from "./customers";
 export * from "./find-us-here";
 export * from "./reports";
+export * from "./reviews";
 export * from "./contact-us";
 export * from "./settings";

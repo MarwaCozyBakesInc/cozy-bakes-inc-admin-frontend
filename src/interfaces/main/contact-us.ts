@@ -60,3 +60,27 @@ export interface ContactUsImageCardProps {
 export interface ContactUsActionButtonProps {
   children: ReactNode;
 }
+
+export interface ContactUsHeroSectionData {
+  hero_title: string;
+  hero_subtitle: string;
+  cover_image: string;
+}
+
+export interface ContactUsDetailsSectionData {
+  contact_email: string;
+  phone_number: string;
+  location: string;
+  image: string;
+}
+
+export interface ContactUsDetailsData {
+  hero_section: ContactUsHeroSectionData | null;
+  contact_section: ContactUsDetailsSectionData | null;
+}
+
+export interface ContactUsDetailsResponse {
+  status: string;
+  message: string;
+  data: ContactUsDetailsData;
+}

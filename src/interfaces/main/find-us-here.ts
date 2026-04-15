@@ -49,6 +49,44 @@ export interface FindUsHereSummaryCardProps {
   metric: FindUsHereSummaryMetric;
 }
 
+export interface MarketDashboardStatsData {
+  total_markets: number;
+  active_days: number;
+  markets_this_week: number;
+  avg_markets_per_day: number;
+}
+
+export interface MarketDashboardStatsResponse {
+  status: string;
+  data: MarketDashboardStatsData;
+}
+
+export interface FindUsHereMarketApiItem {
+  id: number;
+  slug: string;
+  market_name: string;
+  tag_label: string;
+  date: string;
+  day: string;
+  time: string;
+  location_address: string;
+  description: string;
+  cover_images: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FindUsHereMarketDayApiItem {
+  day: string;
+  total_markets: number;
+  markets: FindUsHereMarketApiItem[];
+}
+
+export interface FindUsHereMarketsResponse {
+  status: string;
+  data: FindUsHereMarketDayApiItem[];
+}
+
 export interface FindUsHereDaySectionProps {
   day: FindUsHereMarketDay;
   expanded: boolean;

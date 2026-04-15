@@ -103,3 +103,55 @@ export interface SettingsNotificationItemProps {
   enabled: boolean;
   onToggle: (id: SettingsNotificationPreferenceId) => void;
 }
+
+export interface AdminSettingsUserData {
+  slug: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  profile: AdminSettingsUserProfileData | null;
+}
+
+export interface AdminSettingsUserProfileData {
+  id: number;
+  user_id: string;
+  phone_number: string | null;
+  address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminSettingsShopData {
+  id: number;
+  slug: string;
+  store_description: string;
+  name: string;
+  phone_number: string;
+  email: string;
+  address_line: string;
+  is_active: number | string;
+}
+
+export interface AdminNotificationPreferencesData {
+  id: number;
+  new_orders: number | string;
+  low_stock_alerts: number | string;
+  customer_messages: number | string;
+  weekly_reports: number | string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AdminSettingsData {
+  user: AdminSettingsUserData | null;
+  shop: AdminSettingsShopData | null;
+  notification_preferences: AdminNotificationPreferencesData | null;
+}
+
+export interface AdminSettingsResponse {
+  status: string;
+  message?: string;
+  data: AdminSettingsData;
+}

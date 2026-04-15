@@ -35,13 +35,26 @@ export function FindUsHereMarketCard({
     <article className="overflow-hidden rounded-2xl bg-background shadow-[0_1px_2px_rgba(16,24,40,0.05),0_0_0_4px_rgba(209,150,40,0.05)]">
       <div className="grid lg:grid-cols-[1.02fr_1fr]">
         <div className="relative min-h-72">
-          <Image
-            src={location.imageSrc}
-            alt={location.imageAlt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 48vw"
-          />
+          {location.imageSrc ? (
+            <Image
+              src={location.imageSrc}
+              alt={location.imageAlt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 48vw"
+            />
+          ) : (
+            <div className="flex h-full min-h-72 items-center justify-center bg-[linear-gradient(135deg,#fbf8eb_0%,#f3ead1_100%)] p-6 text-center">
+              <div>
+                <p className="text-lg font-semibold text-primary">
+                  No cover image
+                </p>
+                <p className="mt-2 text-sm font-medium text-muted-text">
+                  Add a market image to preview this location here.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col justify-center gap-6 p-6 md:p-8">
