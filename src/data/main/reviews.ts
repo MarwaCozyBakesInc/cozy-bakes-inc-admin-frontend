@@ -89,6 +89,7 @@ export const reviewFilterOptions: ReviewFilterOption[] = [
 export const reviewRows: ReviewRow[] = [
   {
     id: "review-1",
+    slug: "review-1",
     name: "Sarah Johnson",
     email: "sophie.t@email.com",
     rating: 4.5,
@@ -99,6 +100,7 @@ export const reviewRows: ReviewRow[] = [
   },
   {
     id: "review-2",
+    slug: "review-2",
     name: "Michael Chen",
     email: "michael.c@email.com",
     rating: 4.5,
@@ -109,6 +111,7 @@ export const reviewRows: ReviewRow[] = [
   },
   {
     id: "review-3",
+    slug: "review-3",
     name: "Emma Davis",
     email: "Emma.avis@email.com",
     rating: 4.5,
@@ -119,6 +122,7 @@ export const reviewRows: ReviewRow[] = [
   },
   {
     id: "review-4",
+    slug: "review-4",
     name: "James Wilson",
     email: "james.b@email.com",
     rating: 4.5,
@@ -129,6 +133,7 @@ export const reviewRows: ReviewRow[] = [
   },
   {
     id: "review-5",
+    slug: "review-5",
     name: "Olivia Brown",
     email: "Olivia.m@email.com",
     rating: 4.5,
@@ -139,6 +144,7 @@ export const reviewRows: ReviewRow[] = [
   },
   {
     id: "review-6",
+    slug: "review-6",
     name: "Robert Taylor",
     email: "Robert.w@email.com",
     rating: 4.5,
@@ -149,6 +155,7 @@ export const reviewRows: ReviewRow[] = [
   },
   {
     id: "review-7",
+    slug: "review-7",
     name: "Sophia Martinez",
     email: "Sophia.w@email.com",
     rating: 4.5,
