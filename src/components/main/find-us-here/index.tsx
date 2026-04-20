@@ -1,5 +1,6 @@
 "use client";
 
+import { Store } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   findUsHereSummaryMetrics,
@@ -113,8 +114,11 @@ function FindUsHere() {
             ))
           : marketDays.length === 0
             ? (
-                <div className="rounded-2xl border border-primary/15 bg-[#fbf8eb4d] p-10 text-center shadow-[0_1px_2px_rgba(16,24,40,0.04)]">
-                  <p className="text-xl font-semibold text-dark">
+                <div className="flex min-h-[170px] flex-col items-center justify-center rounded-2xl border border-primary/15 bg-[#fbf8eb4d] p-10 text-center shadow-[0_1px_2px_rgba(16,24,40,0.04)]">
+                  <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                    <Store className="size-8" strokeWidth={2} />
+                  </span>
+                  <p className="mt-4 text-xl font-semibold text-dark">
                     No markets scheduled yet
                   </p>
                   <p className="mt-2 text-sm font-medium text-muted-text">

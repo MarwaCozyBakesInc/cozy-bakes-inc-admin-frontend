@@ -30,5 +30,5 @@ export const customersListAPI = async (
     `/customer/list?tab=${tab}&sort=${sort}&page=${page}&per_page=${PAGE_SIZE}`,
   );
 
-export const customersViewAPI = async (slug: string) =>
+export const singleCustomerAPI = async (slug: string) =>
   await baseAPI<CustomerDetailsResponse>("GET", `/customer/${slug}/view`);

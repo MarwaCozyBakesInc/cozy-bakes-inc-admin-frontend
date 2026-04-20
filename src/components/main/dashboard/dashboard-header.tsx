@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Plus, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -20,11 +21,14 @@ export function DashboardHeader() {
         </Button>
 
         <Button
+          asChild
           variant="outline"
           className="h-10 rounded-full border-primary/20 bg-bg-creamy px-5 text-xs font-semibold text-primary hover:bg-primary/10 hover:text-primary md:text-sm"
         >
-          <ShoppingBag className="size-4" />
-          View Orders
+          <Link href="/orders">
+            <ShoppingBag className="size-4" />
+            View Orders
+          </Link>
         </Button>
       </div>
     </header>

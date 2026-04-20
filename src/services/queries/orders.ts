@@ -1,10 +1,13 @@
-import type { OrdersApiResponse } from "@/interfaces";
+import type { OrdersApiResponse, SingleOrderApiResponse } from "@/interfaces";
 import { PAGE_SIZE } from "@/constants";
 import type { OrderSort } from "@/types/main/orders";
 import { baseAPI } from "..";
 
 export const listOrdersAPI = async (page: number, sort?: OrderSort) =>
-  await baseAPI<OrdersApiResponse>("GET", `/order/list?${buildOrdersQuery(page, sort)}`);
+  await baseAPI<OrdersApiResponse>(
+    "GET",
+    `/order/list?${buildOrdersQuery(page, sort)}`,
+  );
 
 function buildOrdersQuery(page: number, sort?: OrderSort) {
   const params = new URLSearchParams({
@@ -18,3 +21,6 @@ function buildOrdersQuery(page: number, sort?: OrderSort) {
 
   return params.toString();
 }
+
+export const singleOrderAPI = async (orderNo: string) =>
+  await baseAPI<SingleOrderApiResponse>("GET", `/order/${orderNo}/view`);

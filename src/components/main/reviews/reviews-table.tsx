@@ -1,11 +1,35 @@
-import { Eye, MoreVertical } from "lucide-react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { Eye, MoreVertical, Trash2 } from "lucide-react";
 import type { ReviewsTableProps } from "@/interfaces/main/reviews";
 import { Button } from "@/components/ui/button";
 import { Shimmer } from "@/components/ui/shimmer";
 import { ReviewsRatingBadge } from "./reviews-rating-badge";
 import { ReviewsStatusBadge } from "./reviews-status-badge";
 
-export function ReviewsTable({ rows, isLoading }: ReviewsTableProps) {
+export function ReviewsTable({
+  rows,
+  isLoading,
+  onDeleteRequest,
+}: ReviewsTableProps) {
+  const [openActionId, setOpenActionId] = useState<string | null>(null);
+  const actionMenuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function handlePointerDown(event: MouseEvent) {
+      if (
+        actionMenuRef.current &&
+        !actionMenuRef.current.contains(event.target as Node)
+      ) {
+        setOpenActionId(null);
+      }
+    }
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, []);
+
   const renderEmptyState = () => (
     <tr className="bg-[color-mix(in_srgb,var(--color-bg-creamy)_22%,white)]">
       <td
@@ -113,18 +137,41 @@ export function ReviewsTable({ rows, isLoading }: ReviewsTableProps) {
                       </td>
                       <td className="border-b border-primary/10 px-4 py-4 align-top">
                         <div className="flex items-center gap-2">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon"
-                            className="inline-flex size-10 items-center justify-center rounded-[10px] bg-info-soft text-info"
-                            aria-label={`More actions for ${row.name}`}
-                          >
-                            <MoreVertical
-                              className="size-4"
-                              strokeWidth={2.2}
-                            />
-                          </Button>
+                          <div className="relative" ref={openActionId === row.id ? actionMenuRef : null}>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="inline-flex size-10 items-center justify-center rounded-[10px] bg-info-soft text-info"
+                              aria-label={`More actions for ${row.name}`}
+                              onClick={() =>
+                                setOpenActionId((current) =>
+                                  current === row.id ? null : row.id,
+                                )
+                              }
+                            >
+                              <MoreVertical
+                                className="size-4"
+                                strokeWidth={2.2}
+                              />
+                            </Button>
+
+                            {openActionId === row.id ? (
+                              <div className="absolute right-0 z-20 mt-2 min-w-36 overflow-hidden rounded-xl border border-primary/10 bg-white p-1 shadow-[0_18px_40px_rgba(61,44,30,0.14)]">
+                                <button
+                                  type="button"
+                                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-[#f04438] transition-colors hover:bg-[#fff5f4]"
+                                  onClick={() => {
+                                    setOpenActionId(null);
+                                    onDeleteRequest(row);
+                                  }}
+                                >
+                                  <Trash2 className="size-4" strokeWidth={2} />
+                                  Delete
+                                </button>
+                              </div>
+                            ) : null}
+                          </div>
                           <Button
                             type="button"
                             variant="ghost"

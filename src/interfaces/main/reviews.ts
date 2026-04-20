@@ -6,7 +6,6 @@ import type {
   ReviewMetricIcon,
   ReviewMetricTrendTone,
   ReviewModerationControlType,
-  ReviewSortOption,
   ReviewStatus,
   ReviewStatusTone,
 } from "@/types/main/reviews";
@@ -81,6 +80,7 @@ export interface ReviewsToolbarProps {
 
 export interface ReviewRow {
   id: string;
+  slug: string;
   name: string;
   email: string;
   rating: number;
@@ -92,6 +92,7 @@ export interface ReviewRow {
 export interface ReviewsTableProps {
   rows: ReviewRow[];
   isLoading?: boolean;
+  onDeleteRequest: (row: ReviewRow) => void;
 }
 
 export interface ReviewsStatusBadgeProps {
@@ -156,6 +157,7 @@ export interface ReviewStatusStatsResponse {
 
 export interface ReviewListItem {
   id: number;
+  slug?: string;
   customer_name: string;
   customer_email: string;
   rating: number;

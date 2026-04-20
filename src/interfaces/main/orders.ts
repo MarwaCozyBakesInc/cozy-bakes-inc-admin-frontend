@@ -47,6 +47,7 @@ export interface OrdersToolbarProps {
 export interface OrdersStatusBadgeProps {
   status: OrderStatus;
   onChangeRequest: (status: OrderStatus) => void;
+  disabled?: boolean;
 }
 
 export interface PendingOrderStatusUpdate {
@@ -58,11 +59,13 @@ export interface PendingOrderStatusUpdate {
 export interface OrdersTableProps {
   orders: OrderRecord[];
   onStatusChangeRequest: (order: OrderRecord, status: OrderStatus) => void;
+  onViewDetails: (order: OrderRecord) => void;
 }
 
 export interface OrdersCardGridProps {
   orders: OrderRecord[];
   onStatusChangeRequest: (order: OrderRecord, status: OrderStatus) => void;
+  onViewDetails: (order: OrderRecord) => void;
 }
 
 export interface OrdersPaginationProps {
@@ -127,4 +130,69 @@ export interface OrdersApiResponse {
   status: string;
   message: string;
   data: OrdersPaginationData;
+}
+
+export interface OrderCustomerDetails {
+  name: string;
+  email: string;
+  phone: string | null;
+}
+
+export interface OrderPricingDetails {
+  subtotal: string;
+  delivery_fee: string;
+  total_amount: string;
+  total_quantity: string;
+}
+
+export interface OrderShippingShop {
+  id: number;
+  name: string;
+  address?: string | null;
+}
+
+export interface OrderShippingDetails {
+  fulfillment_type: string;
+  address_line: string | null;
+  note: string | null;
+  shop: OrderShippingShop | null;
+}
+
+export interface OrderItemImage {
+  id?: number;
+  url?: string;
+  path?: string;
+  alt?: string | null;
+}
+
+export interface SingleOrderItem {
+  product_id: number;
+  product_name: string;
+  quantity: number;
+  price: string;
+  subtotal: string | null;
+  images: OrderItemImage[];
+}
+
+export interface SingleOrderData {
+  id: number;
+  order_number: string;
+  customer: OrderCustomerDetails;
+  pricing: OrderPricingDetails;
+  order_status: ApiOrderStatus;
+  payment_status: OrderPaymentStatus;
+  payment_method: OrderPaymentMethod;
+  cod_payment_method: string | null;
+  payment_intent_id: string | null;
+  refund_id: string | null;
+  shipping: OrderShippingDetails;
+  items: SingleOrderItem[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SingleOrderApiResponse {
+  status: string;
+  message: string;
+  data: SingleOrderData;
 }

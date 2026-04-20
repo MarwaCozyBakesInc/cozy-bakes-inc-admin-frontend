@@ -19,6 +19,7 @@ import type {
   CustomerSortOption,
 } from "@/types/main/customers";
 import { CustomersCanvas } from "./customers-canvas";
+import CustomerDetails from "./customer-details";
 import { CustomersHeader } from "./customers-header";
 import { CustomersPagination } from "./customers-pagination";
 import { CustomersPerformanceOverview } from "./customers-performance-overview";
@@ -94,6 +95,7 @@ function mapCustomerItemToRow(item: CustomersListItem): CustomerRecord {
 
   return {
     id: `#USER-${item.id}`,
+    slug: item.slug,
     name: item.name,
     email: item.email,
     orders: item.orders,
@@ -142,6 +144,8 @@ function Customers() {
     useState<CustomerSegmentFilter>("all");
   const [searchValue, setSearchValue] = useState("");
   const [sortValue, setSortValue] = useState<CustomerSortOption>("newest");
+  const [selectedCustomerSlug, setSelectedCustomerSlug] = useState<string | null>(null);
+  const [isCustomerDetailsOpen, setIsCustomerDetailsOpen] = useState(false);
   const { data, isLoading } = useCustomersList(
     mapFilterToApiTab(activeFilter),
     sortValue,
@@ -222,8 +226,19 @@ function Customers() {
     URL.revokeObjectURL(url);
   }
 
+  function handleViewCustomerDetails(customer: CustomerRecord) {
+    setSelectedCustomerSlug(customer.slug);
+    setIsCustomerDetailsOpen(true);
+  }
+
+  function closeCustomerDetails() {
+    setIsCustomerDetailsOpen(false);
+    setSelectedCustomerSlug(null);
+  }
+
   return (
-    <CustomersShell>
+    <>
+      <CustomersShell>
       <CustomersHeader
         title={customersWorkspace.title}
         description={customersWorkspace.description}
@@ -250,7 +265,11 @@ function Customers() {
           onExport={handleExportCustomers}
         />
 
-        <CustomersTable rows={visibleRows} isLoading={isLoading} />
+        <CustomersTable
+          rows={visibleRows}
+          isLoading={isLoading}
+          onViewDetails={handleViewCustomerDetails}
+        />
 
         {shouldShowPagination ? (
           <div className="flex justify-center overflow-x-auto pt-2">
@@ -261,7 +280,14 @@ function Customers() {
           </div>
         ) : null}
       </CustomersCanvas>
-    </CustomersShell>
+      </CustomersShell>
+
+      <CustomerDetails
+        open={isCustomerDetailsOpen}
+        slug={selectedCustomerSlug}
+        onClose={closeCustomerDetails}
+      />
+    </>
   );
 }
 

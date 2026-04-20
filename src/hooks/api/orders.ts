@@ -1,5 +1,5 @@
-import { listOrdersAPI } from "@/services/queries/orders";
-import { useCustomInfiniteQuery } from "../useCustomQuery";
+import { listOrdersAPI, singleOrderAPI } from "@/services/queries/orders";
+import { useCustomInfiniteQuery, useCustomQuery } from "../useCustomQuery";
 import { OrderSort } from "@/types/main/orders";
 
 export function useOrders(sort?: OrderSort) {
@@ -22,5 +22,13 @@ export function useOrders(sort?: OrderSort) {
         return undefined;
       },
     },
+  );
+}
+
+export function useSingleOrder(orderNo: string, enabled = true) {
+  return useCustomQuery(
+    ["single-order", orderNo],
+    () => singleOrderAPI(orderNo),
+    { enabled: enabled && Boolean(orderNo) },
   );
 }

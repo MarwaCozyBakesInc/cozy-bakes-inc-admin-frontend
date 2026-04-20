@@ -23,15 +23,17 @@ const editableStatuses: OrderStatus[] = [
 export function OrdersStatusSelect({
   status,
   onChangeRequest,
+  disabled = false,
 }: OrdersStatusBadgeProps) {
   return (
     <label
-      className={`relative inline-flex min-w-[122px] items-center rounded-[14px] border border-white/70 px-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] ${statusStyles[status]}`}
+      className={`relative inline-flex min-w-[122px] items-center rounded-[14px] border border-white/70 px-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] ${statusStyles[status]} ${disabled ? "cursor-not-allowed opacity-75" : ""}`}
     >
       <select
         aria-label={`Update order status to ${status}`}
-        className="h-10 w-full cursor-pointer appearance-none bg-transparent pl-3 pr-8 text-sm font-semibold outline-none"
+        className={`h-10 w-full appearance-none bg-transparent pl-3 pr-8 text-sm font-semibold outline-none ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
         value={status}
+        disabled={disabled}
         onChange={(event) => onChangeRequest(event.target.value as OrderStatus)}
       >
         {editableStatuses.map((option) => (
@@ -40,7 +42,9 @@ export function OrdersStatusSelect({
           </option>
         ))}
       </select>
-      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 opacity-80" />
+      {!disabled ? (
+        <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 opacity-80" />
+      ) : null}
     </label>
   );
 }

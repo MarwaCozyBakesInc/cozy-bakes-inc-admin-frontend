@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import {
   reviewFilterOptions,
   reviewModerationControls,
@@ -13,19 +15,25 @@ import type {
   ReviewListApiStatus,
   ReviewListApiSortOption,
 } from "@/types/main/reviews";
+import type { ReviewRow } from "@/interfaces/main/reviews";
 import { ReviewsFilterTabs } from "./reviews-filter-tabs";
 import { ReviewsHeader } from "./reviews-header";
 import { ReviewsModerationPanel } from "./reviews-moderation-panel";
+import { ReviewsDeleteModal } from "./reviews-delete-modal";
 import { ReviewsShell } from "./reviews-shell";
 import { ReviewsSummaryGrid } from "./reviews-summary-grid";
 import { ReviewsTable } from "./reviews-table";
 import { ReviewsToolbar } from "./reviews-toolbar";
 import { useReviewList } from "@/hooks/api";
+import { deleteReviewAPI } from "@/services/mutations/orders";
 
 function Reviews() {
+  const queryClient = useQueryClient();
   const [activeFilter, setActiveFilter] = useState<ReviewFilter>("all");
   const [searchValue, setSearchValue] = useState("");
   const [sortValue, setSortValue] = useState<ReviewListApiSortOption>("newest");
+  const [reviewToDelete, setReviewToDelete] = useState<ReviewRow | null>(null);
+  const [isDeletingReview, setIsDeletingReview] = useState(false);
   const statusFilter: ReviewListApiStatus | undefined =
     activeFilter === "all"
       ? undefined
@@ -38,7 +46,7 @@ function Reviews() {
     () => data?.pages?.flatMap((page) => page?.data?.data ?? []) ?? [],
     [data],
   );
-  console.log(apiRows);
+  console.log("API Rows:", apiRows);
   const mappedRows = useMemo(
     () =>
       apiRows.map((row) => {
@@ -52,6 +60,7 @@ function Reviews() {
 
         return {
           id: String(row.id),
+          slug: row.slug ?? String(row.id),
           name: row.customer_name,
           email: row.customer_email,
           rating: Number.isFinite(parsedRating) ? parsedRating : 0,
@@ -86,35 +95,80 @@ function Reviews() {
     setSortValue(value);
   }, []);
 
+  const handleDeleteRequest = useCallback((row: ReviewRow) => {
+    setReviewToDelete(row);
+  }, []);
+
+  const closeDeleteModal = useCallback(() => {
+    if (isDeletingReview) {
+      return;
+    }
+
+    setReviewToDelete(null);
+  }, [isDeletingReview]);
+
+  const confirmDeleteReview = useCallback(async () => {
+    if (!reviewToDelete) {
+      return;
+    }
+
+    setIsDeletingReview(true);
+    const result = await deleteReviewAPI(reviewToDelete.slug);
+
+    if (result?.ok) {
+      toast.success(result?.message);
+      setReviewToDelete(null);
+      setIsDeletingReview(false);
+      await queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      return;
+    }
+
+    toast.error(result?.message);
+    setIsDeletingReview(false);
+  }, [queryClient, reviewToDelete]);
+
   return (
-    <ReviewsShell>
-      <ReviewsHeader
-        title={reviewsWorkspace.title}
-        description={reviewsWorkspace.description}
-        actionLabel={reviewsWorkspace.primaryActionLabel}
+    <>
+      <ReviewsShell>
+        <ReviewsHeader
+          title={reviewsWorkspace.title}
+          description={reviewsWorkspace.description}
+          actionLabel={reviewsWorkspace.primaryActionLabel}
+        />
+
+        <ReviewsSummaryGrid metrics={reviewSummaryMetrics} />
+
+        <ReviewsModerationPanel controls={reviewModerationControls} />
+
+        <div className="space-y-4">
+          <ReviewsFilterTabs
+            filters={reviewFilterOptions}
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+          />
+
+          <ReviewsToolbar
+            searchValue={searchValue}
+            onSearchChange={handleSearchChange}
+            sortValue={sortValue}
+            onSortChange={handleSortChange}
+          />
+
+          <ReviewsTable
+            rows={visibleRows}
+            isLoading={isLoading}
+            onDeleteRequest={handleDeleteRequest}
+          />
+        </div>
+      </ReviewsShell>
+
+      <ReviewsDeleteModal
+        review={reviewToDelete}
+        isLoading={isDeletingReview}
+        onClose={closeDeleteModal}
+        onConfirm={confirmDeleteReview}
       />
-
-      <ReviewsSummaryGrid metrics={reviewSummaryMetrics} />
-
-      <ReviewsModerationPanel controls={reviewModerationControls} />
-
-      <div className="space-y-4">
-        <ReviewsFilterTabs
-          filters={reviewFilterOptions}
-          activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
-        />
-
-        <ReviewsToolbar
-          searchValue={searchValue}
-          onSearchChange={handleSearchChange}
-          sortValue={sortValue}
-          onSortChange={handleSortChange}
-        />
-
-        <ReviewsTable rows={visibleRows} isLoading={isLoading} />
-      </div>
-    </ReviewsShell>
+    </>
   );
 }
 

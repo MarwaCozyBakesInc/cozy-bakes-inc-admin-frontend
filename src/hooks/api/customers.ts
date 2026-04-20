@@ -2,6 +2,7 @@ import {
   customersListAPI,
   customersOverviewStatsAPI,
   customersPerformanceOverviewStatsAPI,
+  singleCustomerAPI,
 } from "@/services/queries";
 import type { CustomerSortOption } from "@/types/main/customers";
 import { useCustomInfiniteQuery, useCustomQuery } from "..";
@@ -40,5 +41,13 @@ export function useCustomersList(
         return undefined;
       },
     },
+  );
+}
+
+export function useSingleCustomer(slug: string, enabled = true) {
+  return useCustomQuery(
+    ["singleCustomer", slug],
+    () => singleCustomerAPI(slug),
+    { enabled: enabled && Boolean(slug) },
   );
 }

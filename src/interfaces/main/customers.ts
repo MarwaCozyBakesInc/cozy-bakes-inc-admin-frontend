@@ -50,6 +50,7 @@ export interface CustomerSegmentOption {
 
 export interface CustomerRecord {
   id: string;
+  slug: string;
   name: string;
   email: string;
   orders: number;
@@ -92,6 +93,7 @@ export interface CustomersToolbarProps {
 export interface CustomersTableProps {
   rows: CustomerRecord[];
   isLoading?: boolean;
+  onViewDetails: (customer: CustomerRecord) => void;
 }
 
 export interface CustomersPaginationProps {

@@ -23,6 +23,7 @@ function lastOrderTone(value: string) {
 export function CustomersTable({
   rows,
   isLoading = false,
+  onViewDetails,
 }: CustomersTableProps) {
   return (
     <div className="overflow-hidden rounded-lg border border-primary/10 bg-background">
@@ -182,6 +183,7 @@ export function CustomersTable({
                         size="icon"
                         className="inline-flex size-11 items-center justify-center rounded-[8px] bg-primary text-white"
                         aria-label={`View ${row.name}`}
+                        onClick={() => onViewDetails(row)}
                       >
                         <Eye className="size-4" strokeWidth={2.2} />
                       </Button>

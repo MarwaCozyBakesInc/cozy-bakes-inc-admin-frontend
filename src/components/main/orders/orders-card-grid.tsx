@@ -60,26 +60,32 @@ function getStepIcon(step: (typeof workflow)[number], currentStatus: OrderStatus
 export function OrdersCardGrid({
   orders,
   onStatusChangeRequest,
+  onViewDetails,
 }: OrdersCardGridProps) {
   return (
     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {orders.map((order) => (
+        (() => {
+          const isCompleted = order.status === "Delivered";
+
+          return (
         <article
           key={order.id}
           className="overflow-hidden rounded-[16px] border border-border/15 bg-white shadow-[0_16px_36px_rgba(209,150,40,0.08)]"
         >
           <div className="border-b border-border/10 px-5 py-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="space-y-1">
-                <h3 className="text-[18px] font-bold tracking-[-0.03em] text-chocolate">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <div className="min-w-0 flex-1 space-y-1">
+                <h3 className="truncate text-[18px] font-bold tracking-[-0.03em] text-chocolate">
                   {order.customer}
                 </h3>
-                <p className="text-sm font-bold text-gray">{order.id}</p>
+                <p className="truncate text-sm font-bold text-gray">{order.id}</p>
               </div>
 
-              <div className="shrink-0">
+              <div className="shrink-0 self-start">
                 <OrdersStatusSelect
                   status={order.status}
+                  disabled={isCompleted}
                   onChangeRequest={(status) => onStatusChangeRequest(order, status)}
                 />
               </div>
@@ -159,21 +165,26 @@ export function OrdersCardGrid({
               variant="ghost"
               aria-label={`View ${order.id}`}
               className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[8px] bg-primary px-4 text-sm font-semibold text-white"
+              onClick={() => onViewDetails(order)}
             >
               <Eye className="size-4" />
               <span>View Details</span>
             </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              aria-label={`Delete ${order.id}`}
-              className="inline-flex size-11 items-center justify-center rounded-[8px] bg-[#FEF3F2] text-[#F04438]"
-            >
-              <Trash2 className="size-5" />
-            </Button>
+            {!isCompleted ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                aria-label={`Delete ${order.id}`}
+                className="inline-flex size-11 items-center justify-center rounded-[8px] bg-[#FEF3F2] text-[#F04438]"
+              >
+                <Trash2 className="size-5" />
+              </Button>
+            ) : null}
           </div>
         </article>
+          );
+        })()
       ))}
     </div>
   );

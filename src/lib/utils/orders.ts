@@ -26,6 +26,15 @@ const orderStatusMap: Record<ApiOrderStatus, OrderStatus> = {
   cancelled: "Cancelled",
 };
 
+export const reverseOrderStatusMap: Record<OrderStatus, ApiOrderStatus> = {
+  New: "pending",
+  Preparing: "processed",
+  Ready: "packed",
+  Shipped: "shipped",
+  Delivered: "completed",
+  Cancelled: "cancelled",
+};
+
 function formatOrderDate(date: string) {
   const formattedDate = new Date(date);
 

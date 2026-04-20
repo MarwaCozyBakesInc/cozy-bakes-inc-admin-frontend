@@ -106,6 +106,7 @@ export const customerDirectoryState: CustomerDirectoryState = {
 export const customerRows: CustomerRecord[] = [
   {
     id: "#USER-1001",
+    slug: "sarah-johnson",
     name: "Sarah Johnson",
     email: "sophie.t@email.com",
     orders: 16,
@@ -116,6 +117,7 @@ export const customerRows: CustomerRecord[] = [
   },
   {
     id: "#USER-1002",
+    slug: "michael-chen",
     name: "Michael Chen",
     email: "michael.c@email.com",
     orders: 19,
@@ -126,6 +128,7 @@ export const customerRows: CustomerRecord[] = [
   },
   {
     id: "#USER-1003",
+    slug: "emma-davis",
     name: "Emma Davis",
     email: "Emma.avis@email.com",
     orders: 0,
@@ -136,6 +139,7 @@ export const customerRows: CustomerRecord[] = [
   },
   {
     id: "#USER-1004",
+    slug: "james-wilson",
     name: "James Wilson",
     email: "james.b@email.com",
     orders: 1,
@@ -146,6 +150,7 @@ export const customerRows: CustomerRecord[] = [
   },
   {
     id: "#USER-1006",
+    slug: "olivia-brown",
     name: "Olivia Brown",
     email: "Olivia.m@email.com",
     orders: 56,
@@ -156,6 +161,7 @@ export const customerRows: CustomerRecord[] = [
   },
   {
     id: "#USER-1007",
+    slug: "robert-taylor",
     name: "Robert Taylor",
     email: "Robert.w@email.com",
     orders: 70,
@@ -167,6 +173,7 @@ export const customerRows: CustomerRecord[] = [
   },
   {
     id: "#USER-1009",
+    slug: "sophia-martinez",
     name: "Sophia Martinez",
     email: "Sophia.w@email.com",
     orders: 0,

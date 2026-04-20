@@ -1,12 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import type { OrderRecord } from "@/interfaces";
 import type { PendingOrderStatusUpdate } from "@/interfaces/main/orders";
 import { orderFilters } from "@/data/main/orders";
 import { useOrders } from "@/hooks/api";
-import { filterSortMap, mapOrderToRecord } from "@/lib/utils/orders";
+import { filterSortMap, mapOrderToRecord, reverseOrderStatusMap } from "@/lib/utils/orders";
+import { updateOrderStatusAPI } from "@/services/mutations/orders";
 import type { OrderFilterValue, OrderViewMode } from "@/types/main/orders";
+import OrderDetails from "./order-details";
 import { OrdersCardGrid } from "./orders-card-grid";
 import { OrdersCardGridShimmer } from "./orders-card-grid-shimmer";
 import { OrdersEmptyState } from "./orders-empty-state";
@@ -19,9 +23,13 @@ import { OrdersTableShimmer } from "./orders-table-shimmer";
 import { OrdersToolbar } from "./orders-toolbar";
 
 function Orders() {
+  const queryClient = useQueryClient();
   const [activeFilter, setActiveFilter] = useState<OrderFilterValue>("all");
   const [searchValue, setSearchValue] = useState("");
   const [viewMode, setViewMode] = useState<OrderViewMode>("card");
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
+  const [selectedOrderNo, setSelectedOrderNo] = useState<string | null>(null);
+  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
   const [statusOverrides, setStatusOverrides] = useState<Record<string, OrderRecord["status"]>>(
     {},
   );
@@ -82,16 +90,41 @@ function Orders() {
     setPendingStatusUpdate(null);
   }
 
-  function confirmStatusUpdate() {
+  function handleViewDetails(order: OrderRecord) {
+    setSelectedOrderNo(order.id.replace(/^#/, ""));
+    setIsOrderDetailsOpen(true);
+  }
+
+  function closeOrderDetails() {
+    setIsOrderDetailsOpen(false);
+    setSelectedOrderNo(null);
+  }
+
+  async function confirmStatusUpdate() {
     if (!pendingStatusUpdate) {
       return;
     }
 
-    setStatusOverrides((current) => ({
-      ...current,
-      [pendingStatusUpdate.orderId]: pendingStatusUpdate.nextStatus,
-    }));
-    closeStatusModal();
+    const orderNo = pendingStatusUpdate.orderId.replace(/^#/, "");
+    const status = reverseOrderStatusMap[pendingStatusUpdate.nextStatus];
+
+    setIsUpdatingStatus(true);
+    const result = await updateOrderStatusAPI(orderNo, { status });
+
+    if (result?.ok) {
+      setStatusOverrides((current) => ({
+        ...current,
+        [pendingStatusUpdate.orderId]: pendingStatusUpdate.nextStatus,
+      }));
+      toast.success(result?.message);
+      closeStatusModal();
+      setIsUpdatingStatus(false);
+      await queryClient.invalidateQueries({ queryKey: ["orders"] });
+      return;
+    }
+
+    toast.error(result?.message);
+    setIsUpdatingStatus(false);
   }
 
   return (
@@ -137,11 +170,13 @@ function Orders() {
             <OrdersTable
               orders={visibleOrders}
               onStatusChangeRequest={handleStatusChangeRequest}
+              onViewDetails={handleViewDetails}
             />
           ) : (
             <OrdersCardGrid
               orders={visibleOrders}
               onStatusChangeRequest={handleStatusChangeRequest}
+              onViewDetails={handleViewDetails}
             />
           )
         )}
@@ -156,8 +191,15 @@ function Orders() {
 
       <OrdersStatusChangeModal
         pendingUpdate={pendingStatusUpdate}
+        isLoading={isUpdatingStatus}
         onClose={closeStatusModal}
         onConfirm={confirmStatusUpdate}
+      />
+
+      <OrderDetails
+        open={isOrderDetailsOpen}
+        orderNo={selectedOrderNo}
+        onClose={closeOrderDetails}
       />
     </>
   );
