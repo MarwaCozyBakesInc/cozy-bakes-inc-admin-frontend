@@ -1,14 +1,16 @@
 import Image from "next/image";
-import { CalendarDays, Eye, MapPin, PencilLine, Trash2 } from "lucide-react";
+import { CalendarDays, Eye, MapPin, PencilLine } from "lucide-react";
 import type {
   FindUsHereActionButtonProps,
   FindUsHereMarketCardProps,
 } from "@/interfaces/main/find-us-here";
 import { Button } from "@/components/ui/button";
+import DeleteMarketLocation from "./delete-market-location";
 
 function FindUsHereActionButton({
   children,
   variant = "primary",
+  buttonProps,
 }: FindUsHereActionButtonProps) {
   const variantClassName =
     variant === "primary"
@@ -22,6 +24,7 @@ function FindUsHereActionButton({
       type="button"
       variant="ghost"
       className={`inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-semibold transition-colors ${variantClassName}`}
+      {...buttonProps}
     >
       {children}
     </Button>
@@ -98,9 +101,12 @@ export function FindUsHereMarketCard({
               Preview Market Details
             </FindUsHereActionButton>
 
-            <FindUsHereActionButton variant="danger">
-              <Trash2 className="size-4" strokeWidth={2} />
-            </FindUsHereActionButton>
+            <DeleteMarketLocation
+              marketSlug={location.id}
+              marketName={location.title}
+              marketAddress={location.address}
+              marketSchedule={location.schedule}
+            />
           </div>
         </div>
       </div>

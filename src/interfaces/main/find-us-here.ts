@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { FindUsHereSummaryMetricIcon } from "@/types/main/find-us-here";
 
 export interface FindUsHereWorkspaceConfig {
@@ -39,6 +39,8 @@ export interface FindUsHereHeaderProps {
   description: string;
   primaryActionLabel: string;
   secondaryActionLabel: string;
+  onPrimaryActionClick?: () => void;
+  onSecondaryActionClick?: () => void;
 }
 
 export interface FindUsHereSummaryGridProps {
@@ -100,4 +102,5 @@ export interface FindUsHereMarketCardProps {
 export interface FindUsHereActionButtonProps {
   children: ReactNode;
   variant?: "primary" | "secondary" | "danger";
+  buttonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
 }

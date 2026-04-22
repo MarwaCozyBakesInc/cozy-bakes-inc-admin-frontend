@@ -1,4 +1,8 @@
-import { listOrdersAPI, singleOrderAPI } from "@/services/queries/orders";
+import {
+  listOrdersAPI,
+  orderStatusCountAPI,
+  singleOrderAPI,
+} from "@/services/queries/orders";
 import { useCustomInfiniteQuery, useCustomQuery } from "../useCustomQuery";
 import { OrderSort } from "@/types/main/orders";
 
@@ -31,4 +35,8 @@ export function useSingleOrder(orderNo: string, enabled = true) {
     () => singleOrderAPI(orderNo),
     { enabled: enabled && Boolean(orderNo) },
   );
+}
+
+export function useOrderStatusCount() {
+  return useCustomQuery(["order-status-count"], orderStatusCountAPI);
 }

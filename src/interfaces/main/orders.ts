@@ -132,6 +132,22 @@ export interface OrdersApiResponse {
   data: OrdersPaginationData;
 }
 
+export interface OrderStatusCountData {
+  pending: string;
+  processed: string;
+  packed: string;
+  shipped: string;
+  completed: string;
+  cancelled: string;
+  total_orders: number;
+}
+
+export interface OrderStatusCountApiResponse {
+  status: string;
+  message: string;
+  data: OrderStatusCountData;
+}
+
 export interface OrderCustomerDetails {
   name: string;
   email: string;

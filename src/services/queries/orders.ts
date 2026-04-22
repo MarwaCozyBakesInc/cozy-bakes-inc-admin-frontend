@@ -1,4 +1,8 @@
-import type { OrdersApiResponse, SingleOrderApiResponse } from "@/interfaces";
+import type {
+  OrderStatusCountApiResponse,
+  OrdersApiResponse,
+  SingleOrderApiResponse,
+} from "@/interfaces";
 import { PAGE_SIZE } from "@/constants";
 import type { OrderSort } from "@/types/main/orders";
 import { baseAPI } from "..";
@@ -24,3 +28,6 @@ function buildOrdersQuery(page: number, sort?: OrderSort) {
 
 export const singleOrderAPI = async (orderNo: string) =>
   await baseAPI<SingleOrderApiResponse>("GET", `/order/${orderNo}/view`);
+
+export const orderStatusCountAPI = async () =>
+  await baseAPI<OrderStatusCountApiResponse>("GET", `/order/status-count`);

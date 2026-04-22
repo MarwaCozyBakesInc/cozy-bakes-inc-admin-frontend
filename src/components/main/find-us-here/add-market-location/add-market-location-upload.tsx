@@ -1,0 +1,123 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useMemo, useRef } from "react";
+import { ImageUp } from "lucide-react";
+import { cn } from "@/lib";
+
+interface AddMarketLocationUploadProps {
+  file: File | null;
+  onChange: (file: File | null) => void;
+  error?: string;
+  disabled?: boolean;
+}
+
+export function AddMarketLocationUpload({
+  file,
+  onChange,
+  error,
+  disabled = false,
+}: AddMarketLocationUploadProps) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const previewUrl = useMemo(
+    () => (file ? URL.createObjectURL(file) : null),
+    [file],
+  );
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
+  function handleFileSelection(nextFile: File | null) {
+    onChange(nextFile);
+  }
+
+  return (
+    <div className="flex flex-col gap-2">
+      <label className="text-[16px] font-medium leading-6 text-dark">
+        Cover Image
+      </label>
+
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => inputRef.current?.click()}
+        onDragOver={(event) => {
+          event.preventDefault();
+        }}
+        onDrop={(event) => {
+          if (disabled) {
+            return;
+          }
+          event.preventDefault();
+          const nextFile = event.dataTransfer.files?.[0] ?? null;
+          handleFileSelection(nextFile);
+        }}
+        className={cn(
+          "flex min-h-[150px] w-full flex-col items-center justify-center rounded-[24px] border border-dashed border-primary bg-[rgba(250,248,243,0.7)] px-6 py-8 text-center transition-colors hover:bg-[rgba(250,248,243,0.9)]",
+          file ? "border-primary/70" : "border-primary/85",
+          disabled ? "cursor-not-allowed opacity-60" : "",
+          error ? "border-destructive bg-destructive/5" : "",
+        )}
+      >
+        {previewUrl ? (
+          <div className="flex w-full flex-col items-center gap-4">
+            <div className="relative h-52 w-full overflow-hidden rounded-[18px] border border-primary/15 bg-white shadow-[0_12px_30px_rgba(61,44,30,0.08)]">
+              <Image
+                src={previewUrl}
+                alt={file?.name ?? "Uploaded cover preview"}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-sm leading-5 tracking-[-0.01em] text-muted-text">
+                Preview selected image
+              </p>
+              <p className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-primary shadow-[0_1px_2px_rgba(16,24,40,0.05)]">
+                {file?.name}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <span className="inline-flex items-center justify-center text-primary">
+              <ImageUp className="size-8" strokeWidth={2.2} />
+            </span>
+
+            <p className="mt-3 text-sm leading-5 tracking-[-0.01em] text-muted-text">
+              <span className="font-semibold text-muted-text">
+                Click to upload
+              </span>
+              {" or drag and drop"}
+            </p>
+
+            <p className="mt-1 text-xs leading-4 text-[#98A2B3]">
+              PNG, JPG (MAX. 5MB)
+            </p>
+          </>
+        )}
+      </button>
+
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/jpg"
+        className="hidden"
+        disabled={disabled}
+        onChange={(event) => {
+          handleFileSelection(event.target.files?.[0] ?? null);
+        }}
+      />
+
+      {error ? (
+        <p className="text-sm font-medium text-destructive">{error}</p>
+      ) : null}
+    </div>
+  );
+}

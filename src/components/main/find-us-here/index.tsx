@@ -13,6 +13,7 @@ import type {
 } from "@/interfaces/main/find-us-here";
 import { useMarketListByDay } from "@/hooks/api";
 import { Shimmer } from "@/components/ui/shimmer";
+import AddMarketLocation from "./add-market-location";
 import { FindUsHereDaySection } from "./find-us-here-day-section";
 import { FindUsHereHeader } from "./find-us-here-header";
 import { FindUsHereSummaryGrid } from "./find-us-here-summary-grid";
@@ -66,6 +67,7 @@ function FindUsHere() {
     [marketDays],
   );
   const [expandedDayIds, setExpandedDayIds] = useState<string[] | null>(null);
+  const [isAddMarketLocationOpen, setIsAddMarketLocationOpen] = useState(false);
   const resolvedExpandedDayIds = expandedDayIds ?? defaultExpandedDayIds;
 
   const handleToggleDay = (dayId: string) => {
@@ -85,6 +87,7 @@ function FindUsHere() {
         description={findUsHereWorkspace.description}
         primaryActionLabel={findUsHereWorkspace.primaryActionLabel}
         secondaryActionLabel={findUsHereWorkspace.secondaryActionLabel}
+        onPrimaryActionClick={() => setIsAddMarketLocationOpen(true)}
       />
 
       <FindUsHereSummaryGrid metrics={findUsHereSummaryMetrics} />
@@ -135,6 +138,14 @@ function FindUsHere() {
                 />
               ))}
       </div>
+
+      <AddMarketLocation
+        open={isAddMarketLocationOpen}
+        onClose={() => setIsAddMarketLocationOpen(false)}
+        onSubmit={async () => {
+          setIsAddMarketLocationOpen(false);
+        }}
+      />
     </section>
   );
 }

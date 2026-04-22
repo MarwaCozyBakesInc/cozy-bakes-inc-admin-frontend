@@ -7,6 +7,8 @@ export function FindUsHereHeader({
   description,
   primaryActionLabel,
   secondaryActionLabel,
+  onPrimaryActionClick,
+  onSecondaryActionClick,
 }: FindUsHereHeaderProps) {
   return (
     <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
@@ -21,6 +23,7 @@ export function FindUsHereHeader({
         <Button
           type="button"
           variant="ghost"
+          onClick={onPrimaryActionClick}
           className="inline-flex h-10 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-primary/90"
         >
           <Plus className="size-4" strokeWidth={2.2} />
@@ -30,6 +33,7 @@ export function FindUsHereHeader({
         <Button
           type="button"
           variant="ghost"
+          onClick={onSecondaryActionClick}
           className="inline-flex h-10 items-center gap-2 rounded-full border border-primary/15 bg-[#fbf8eb80] px-5 text-sm font-semibold text-primary transition-colors hover:bg-[#fbf8eb]"
         >
           <PencilLine className="size-4" strokeWidth={2.2} />
